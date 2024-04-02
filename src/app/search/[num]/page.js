@@ -1,3 +1,4 @@
+import BackBTN from "@/app/components/backBTN";
 import React from "react";
 import("../../styles/search.css");
 const searchData = async (num) => {
@@ -31,6 +32,7 @@ const Page = async ({ params }) => {
                     <table border={1}>
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Mobile</th>
                                 <th>Name</th>
                                 <th>CNIC</th>
@@ -41,6 +43,7 @@ const Page = async ({ params }) => {
                             {
                                 userData.data.map((user, index) => (
                                     <tr key={index}>
+                                        <td>{(index + 1)}</td>
                                         <td>{user.MOBILE}</td>
                                         <td>{user.NAME}</td>
                                         <td>{user.CNIC}</td>
@@ -52,7 +55,10 @@ const Page = async ({ params }) => {
                 </div>
             )}
             {userData && userData.status === "error" && (
+                <>
                 <p>Error: {userData.message}</p>
+                    <BackBTN/>
+                </>
             )}
         </div>
     );
