@@ -38,7 +38,7 @@ const Page = async ({ params }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {!userData === undefined &&
+                            {
                                 userData.data.map((user, index) => (
                                     <tr key={index}>
                                         <td>{user.MOBILE}</td>
