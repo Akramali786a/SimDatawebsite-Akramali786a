@@ -3,7 +3,7 @@ import("../../styles/search.css");
 const searchData = async (num) => {
     const baseUrl =
         process.env.NODE_ENV === "production"
-            ? "https://your-production-domain.com"
+            ? "https://pakdata.vercel.app"
             : "http://localhost:3000";
     const apiUrl = `${baseUrl}/api/search`;
     const req = await fetch(apiUrl, {
