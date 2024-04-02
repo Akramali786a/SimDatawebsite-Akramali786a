@@ -1,0 +1,35 @@
+/* CSS for the table */
+table {
+    width: auto;
+    border-collapse: collapse;
+  }
+  
+  table th,
+  table td {
+    padding: 12px;
+    border: 1px solid #78ac19;
+    text-align: left;
+    color: #0ca4b8;
+  }
+  
+  table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* CSS for table rows */
+  table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+
+  /* CSS for error message */
+  .main p {
+    color: red;
+    font-weight: bold;
+  }
+  .main .table-responsive{
+    overflow-x: auto;
+    width: 100%;
+  }
