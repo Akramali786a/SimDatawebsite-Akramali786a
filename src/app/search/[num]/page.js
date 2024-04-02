@@ -1,7 +1,12 @@
 import React from "react";
-import("../../styles/search.css")
+import("../../styles/search.css");
 const searchData = async (num) => {
-    const req = await fetch(`http://localhost:3000/api/search`, {
+    const baseUrl =
+        process.env.NODE_ENV === "production"
+            ? "https://your-production-domain.com"
+            : "http://localhost:3000";
+    const apiUrl = `${baseUrl}/api/search`;
+    const req = await fetch(apiUrl, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -21,29 +26,29 @@ const Page = async ({ params }) => {
     console.log(userData);
     return (
         <div className="main">
-            
             {userData && userData.status === "success" && (
                 <div className="table-responsive">
                     <table border={1}>
-                    <thead>
-                        <tr>
-                            <th>Mobile</th>
-                            <th>Name</th>
-                            <th>CNIC</th>
-                            <th>Address</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {userData.data.map((user, index) => (
-                            <tr key={index}>
-                                <td>{user.MOBILE}</td>
-                                <td>{user.NAME}</td>
-                                <td>{user.CNIC}</td>
-                                <td>{user.ADDRESS}</td>
+                        <thead>
+                            <tr>
+                                <th>Mobile</th>
+                                <th>Name</th>
+                                <th>CNIC</th>
+                                <th>Address</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {!userData === undefined &&
+                                userData.data.map((user, index) => (
+                                    <tr key={index}>
+                                        <td>{user.MOBILE}</td>
+                                        <td>{user.NAME}</td>
+                                        <td>{user.CNIC}</td>
+                                        <td>{user.ADDRESS}</td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
                 </div>
             )}
             {userData && userData.status === "error" && (

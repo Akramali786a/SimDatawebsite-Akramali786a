@@ -29,9 +29,12 @@ export async function POST(req) {
       });
     }
 
-    // Sanitize the input by removing any non-numeric characters
+    // Sanitize the input
+    // Remove any non-numeric characters
     number = number.replace(/\D/g, "");
 
+    
+    // Check if the number is not 10 or 11 digits after sanitization
     if (number.length !== 10 && number.length !== 11) {
       return NextResponse.json({
         status: "error",
@@ -39,10 +42,16 @@ export async function POST(req) {
       });
     }
 
+    // Check if the number is 11 digits and starts with 0, then remove the leading 0
+    if (number.length === 11 && number.startsWith("0")) {
+      number = number.slice(1);
+    }
+
+
     const firstThreeDigits = number.substring(0, 3);
     const tableName = `table_${firstThreeDigits}`;
 
-    const [rows, fields] = await pool.query(`SELECT * FROM ?? WHERE MOBILE = ?`, [tableName, number]);
+    const [rows, fields] = await pool.query(`SELECT * FROM ${tableName} WHERE MOBILE = ?`, [number]);
 
     if (rows && rows.length > 0) {
       return NextResponse.json({
@@ -61,6 +70,7 @@ export async function POST(req) {
     return NextResponse.json({
       status: "error",
       message: "An unexpected error occurred",
+      error: error.message
     });
   }
 }

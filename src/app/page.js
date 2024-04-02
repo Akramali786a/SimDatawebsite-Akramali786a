@@ -13,6 +13,11 @@ const Page = () => {
 
       const number = num.trim();
 
+      if(number === ""){
+        alert("Please Enter Valid Number..")
+        return
+      }
+
     navigation.push("/search/"+number);
 
     };
