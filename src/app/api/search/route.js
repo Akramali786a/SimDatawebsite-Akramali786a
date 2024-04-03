@@ -1,12 +1,21 @@
 import { NextResponse } from "next/server";
 import mysql from "mysql2/promise";
 
-// Define the database credentials
+// // Define the database credentials
 const DB_HOST = "mysql-2d05bb08-ranjhaplaysyt-1cd6.a.aivencloud.com";
 const DB_PORT = 28431;
 const DB_USER = "avnadmin";
 const DB_PASSWORD = "AVNS_1MQ-ZTaBJtyzJXpRQys";
 const DB_NAME = "NADRA";
+
+
+
+// Define the database credentials
+// const DB_HOST = "localhost";
+// const DB_PORT = 3306;
+// const DB_USER = "root";
+// const DB_PASSWORD = "";
+// const DB_NAME = "test";
 
 const pool = mysql.createPool({
   host: DB_HOST,

@@ -29,35 +29,43 @@ const Page = async ({ params }) => {
         <div className="main">
             {userData && userData.status === "success" && (
                 <div className="table-responsive">
-                    <table border={1}>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Mobile</th>
-                                <th>Name</th>
-                                <th>CNIC</th>
-                                <th>Address</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                userData.data.map((user, index) => (
-                                    <tr key={index}>
-                                        <td>{(index + 1)}</td>
-                                        <td>{user.MOBILE}</td>
-                                        <td>{user.NAME}</td>
-                                        <td>{user.CNIC}</td>
-                                        <td>{user.ADDRESS}</td>
+                    <table border={1}>    
+                            {userData.data.map((user, index) => (
+                                <tbody key={index}>
+                                    <tr>
+                                        <th>ID</th>
+                                        <td>{index + 1}</td>
                                     </tr>
-                                ))}
-                        </tbody>
+                                    <tr>
+                                        <th>MOBILE</th>
+                                        <td>{user.MOBILE}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>NAME</th>
+                                        <td>{user.NAME}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>CNIC</th>
+                                        <td>{user.CNIC}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>ADDRESS</th>
+                                        <td>{user.ADDRESS || "ADDRESS NOT AVAILABLE"}</td>
+                                    </tr>
+                                    {userData.data.length > 1 ? (
+                                        <br />
+                                    ) : null}
+                                </tbody>
+                            ))}
+                        
                     </table>
+                    <BackBTN/>
                 </div>
             )}
             {userData && userData.status === "error" && (
                 <>
-                <p>Error: {userData.message}</p>
-                    <BackBTN/>
+                    <p>Error: {userData.message}</p>
+                    <BackBTN />
                 </>
             )}
         </div>

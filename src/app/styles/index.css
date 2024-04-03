@@ -4,15 +4,18 @@ div.main {
     justify-content: center;
     flex-direction: column;
     height: 100vh;
-    background: #536976;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #292E49, #536976);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #292E49, #536976); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #536976;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #292E49, #536976);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #292E49, #536976);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
 
 .main .form {
     height: 300px;
-    width: 300px;
+    width: 60%;
     /* background: rebeccapurple; */
 }
 
@@ -28,16 +31,29 @@ background: linear-gradient(to right, #292E49, #536976); /* W3C, IE 10+/ Edge, F
 
 .main form .field {
     width: 100%;
+    display: flex;
+    
+    
 }
 
+.main form .field select{
+    width: 50%;
+    font-size: 15px;
+    border-top-left-radius: 10px;
+    outline: none;
+    border: none;
+    padding: 10px;
+}
 .main form .field input {
     width: 100%;
-    border-radius: 8px;
-    height: 40px;
+    /* border-radius: 8px; */
+    padding: 10px;
+    /* height: 39px; */
     border: none;
     outline: none;
     padding-left: 10px;
     font-size: 18px;
+    border-bottom-right-radius: 10px;
 }
 
 .main form button {
@@ -74,6 +90,14 @@ background: linear-gradient(to right, #292E49, #536976); /* W3C, IE 10+/ Edge, F
     transition: .5s all ease-in-out;
 }
 
-.main form button:hover::before{
+.main form button:hover::before {
     transform: scaleX(1);
+}
+
+@media (max-width:550px) {
+    .main .form {
+        
+        width: 100%;
+        
+    }
 }

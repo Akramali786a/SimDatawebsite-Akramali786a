@@ -3,26 +3,37 @@ import("../styles/search.css");
 const Loading = () => {
     return (
         <>
-            <div className="main">
+             <div className="main">
                 <div className="table-responsive">
-                <table border={1}>
-                    <thead>
+                    <table border={1}>
+                        <tbody>
+                            <tr>
+                                <th>ID</th>
+                                <td>Searching</td>
+                            </tr>
+
+                            <tr>
+                                <th>MOBILE</th>
+                                <td>Searching</td>
+                            </tr>
+
+                            <tr>
+                                <th>NAME</th>
+                                <td>Searching</td>
+                            </tr>
+
+                            <tr>
+                                <th>CNIC</th>
+                                <td>Searching</td>
+                            </tr>
+
                         <tr>
-                            <th>Mobile</th>
-                            <th>Name</th>
-                            <th>CNIC</th>
-                            <th>Address</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Searching</td>
-                            <td>Searching</td>
-                            <td>Searching</td>
+                            <th>ADDRESS</th>
                             <td>Searching</td>
                         </tr>
-                    </tbody>
-                </table>
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </>
