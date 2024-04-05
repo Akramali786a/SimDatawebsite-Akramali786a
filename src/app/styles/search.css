@@ -3,6 +3,13 @@
   overflow-x: auto;
   width: 60%;
   padding: 10px;
+  height: 650px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 table {
@@ -39,6 +46,7 @@ table tr:nth-child(even) {
 .main p {
   color: red;
   font-weight: bold;
+  text-align: center;
 }
 
 .main .returnBtn {

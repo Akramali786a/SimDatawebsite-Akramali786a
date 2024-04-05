@@ -52,9 +52,7 @@ const Page = async ({ params }) => {
                                         <th>ADDRESS</th>
                                         <td>{user.ADDRESS || "ADDRESS NOT AVAILABLE"}</td>
                                     </tr>
-                                    {userData.data.length > 1 ? (
-                                        <br />
-                                    ) : null}
+                                    
                                 </tbody>
                             ))}
                         

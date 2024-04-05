@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 import mysql from "mysql2/promise";
 
 // Define the database credentials
-const DB_HOST = "mysql-2d05bb08-ranjhaplaysyt-1cd6.a.aivencloud.com";
-const DB_PORT = 28431;
+const DB_HOST = "mysql-341e5eec-faisalshahzadyt-39e8.a.aivencloud.com";
+const DB_PORT = 12918;
 const DB_USER = "avnadmin";
-const DB_PASSWORD = "AVNS_1MQ-ZTaBJtyzJXpRQys";
+const DB_PASSWORD = "AVNS_xMDhZvw0nqB-wL7eF0L";
 const DB_NAME = "NADRA";
 
 const pool = mysql.createPool({
@@ -36,10 +36,9 @@ export async function POST(req) {
         ];
 
         let rows = [];
-
         for (const table of tableName) {
             const [resultRows, fields] = await pool.query(
-                `SELECT MOBILE FROM ${table} LIMIT 20`
+                `SELECT MOBILE FROM ${table} ORDER BY MOBILE DESC LIMIT 20`
             );
             rows.push(...resultRows);
         }
