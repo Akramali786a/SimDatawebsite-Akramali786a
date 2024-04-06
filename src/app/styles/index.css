@@ -32,11 +32,9 @@ div.main {
 .main form .field {
     width: 100%;
     display: flex;
-    
-    
 }
 
-.main form .field select{
+.main form .field select {
     width: 50%;
     font-size: 15px;
     border-top-left-radius: 10px;
@@ -44,6 +42,7 @@ div.main {
     border: none;
     padding: 10px;
 }
+
 .main form .field input {
     width: 100%;
     /* border-radius: 8px; */
@@ -69,6 +68,7 @@ div.main {
     cursor: pointer;
     color: white;
     position: relative;
+    overflow: hidden;
     z-index: 1;
 }
 
@@ -96,8 +96,8 @@ div.main {
 
 @media (max-width:550px) {
     .main .form {
-        
+
         width: 100%;
-        
+
     }
 }

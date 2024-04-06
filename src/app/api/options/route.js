@@ -28,11 +28,11 @@ function shuffle(array) {
 export async function POST(req) {
     try {
         const tableName = [
-            "table_312",
-            "table_333",
-            "table_300",
             "table_301",
-            "table_334",
+            "table_302",
+            "table_303",
+            "table_304",
+            "table_305",
         ];
 
         let rows = [];

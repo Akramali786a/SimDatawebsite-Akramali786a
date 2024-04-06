@@ -1,14 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Cairo+Play&family=Krub:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Ojuju:wght@200..800&family=Quicksand:wght@300..700&display=swap');
 
 
-*{
+* {
   margin: 0;
-  padding: 0;box-sizing: border-box;
+  padding: 0;
+  box-sizing: border-box;
   font-family: "Quicksand", sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
 }
+
 div.main {
   display: flex;
   align-items: center;
@@ -16,8 +18,10 @@ div.main {
   flex-direction: column;
   height: 100vh;
   padding: 10px !important;
-  background: #536976;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #292E49, #536976);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #292E49, #536976); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #536976;
+  background: -webkit-linear-gradient(to right, #292E49, #536976);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #292E49, #536976);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }

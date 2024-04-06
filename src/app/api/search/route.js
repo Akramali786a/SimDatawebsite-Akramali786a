@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import mysql from "mysql2/promise";
 
-// // Define the database credentials
+// Define the database credentials
 const DB_HOST = "mysql-2d05bb08-ranjhaplaysyt-1cd6.a.aivencloud.com";
 const DB_PORT = 28431;
 const DB_USER = "avnadmin";
@@ -13,6 +13,12 @@ const DB_PORT1 = 12918;
 const DB_USER1 = "avnadmin";
 const DB_PASSWORD1 = "AVNS_xMDhZvw0nqB-wL7eF0L";
 const DB_NAME1 = "NADRA";
+
+const DB_HOST2 = "mysql-3dc5a780-ranjhagaming44-ef10.a.aivencloud.com";
+const DB_PORT2 = 24075;
+const DB_USER2 = "avnadmin";
+const DB_PASSWORD2 = "AVNS_af-sK2kQLb-IAVFSsNN";
+const DB_NAME2 = "NADRA";
 
 const pool = mysql.createPool({
     host: DB_HOST,
@@ -27,6 +33,13 @@ const pool1 = mysql.createPool({
     user: DB_USER1,
     password: DB_PASSWORD1,
     database: DB_NAME1,
+});
+const pool2 = mysql.createPool({
+    host: DB_HOST2,
+    port: DB_PORT2,
+    user: DB_USER2,
+    password: DB_PASSWORD2,
+    database: DB_NAME2,
 });
 
 export async function POST(req) {
@@ -71,18 +84,40 @@ export async function POST(req) {
             const tableNamePrefix = `table_`;
 
             // Query the information schema to get a list of tables
-            const [rows, fields] = await pool.query("SHOW TABLES");
-            const [rows1, fields1] = await pool1.query("SHOW TABLES");
+            let rows, rows1, rows2;
+            try {
+                [rows] = await pool.query("SHOW TABLES");
+            } catch (error) {
+                console.error("Error querying pool:", error.message);
+                rows = []; // Empty array to continue processing
+            }
+            try {
+                [rows1] = await pool1.query("SHOW TABLES");
+            } catch (error) {
+                console.error("Error querying pool1:", error.message);
+                rows1 = []; // Empty array to continue processing
+            }
+            try {
+                [rows2] = await pool2.query("SHOW TABLES");
+            } catch (error) {
+                console.error("Error querying pool2:", error.message);
+                rows2 = []; // Empty array to continue processing
+            }
 
             // Iterate over tables and execute query for each table for pool
             for (let row of rows) {
                 const tableName = row[`Tables_in_${DB_NAME}`];
                 if (tableName.startsWith(tableNamePrefix)) {
-                    const query = `SELECT * FROM ${tableName} WHERE CNIC = ?`;
-                    const [tableRows, tableFields] = await pool.query(query, [
-                        number,
-                    ]);
-                    combinedData.push(...tableRows);
+                    try {
+                        const query = `SELECT * FROM ${tableName} WHERE CNIC = ?`;
+                        const [tableRows, tableFields] = await pool.query(
+                            query,
+                            [number]
+                        );
+                        combinedData.push(...tableRows);
+                    } catch (error) {
+                        console.error("Error querying pool:", error.message);
+                    }
                 }
             }
 
@@ -90,11 +125,33 @@ export async function POST(req) {
             for (let row of rows1) {
                 const tableName = row[`Tables_in_${DB_NAME1}`];
                 if (tableName.startsWith(tableNamePrefix)) {
-                    const query = `SELECT * FROM ${tableName} WHERE CNIC = ?`;
-                    const [tableRows, tableFields] = await pool1.query(query, [
-                        number,
-                    ]);
-                    combinedData.push(...tableRows);
+                    try {
+                        const query = `SELECT * FROM ${tableName} WHERE CNIC = ?`;
+                        const [tableRows, tableFields] = await pool1.query(
+                            query,
+                            [number]
+                        );
+                        combinedData.push(...tableRows);
+                    } catch (error) {
+                        console.error("Error querying pool1:", error.message);
+                    }
+                }
+            }
+
+            // Iterate over tables and execute query for each table for pool2
+            for (let row of rows2) {
+                const tableName = row[`Tables_in_${DB_NAME2}`];
+                if (tableName.startsWith(tableNamePrefix)) {
+                    try {
+                        const query = `SELECT * FROM ${tableName} WHERE CNIC = ?`;
+                        const [tableRows, tableFields] = await pool2.query(
+                            query,
+                            [number]
+                        );
+                        combinedData.push(...tableRows);
+                    } catch (error) {
+                        console.error("Error querying pool2:", error.message);
+                    }
                 }
             }
         } else {
@@ -103,19 +160,41 @@ export async function POST(req) {
             const tableName = `table_${firstThreeDigits}`;
 
             // Query the first database (pool)
-            const [rowsFromPool, fieldsFromPool] = await pool.query(
-                `SELECT * FROM ${tableName} WHERE MOBILE = ?`,
-                [number]
-            );
+            let rowsFromPool, rowsFromPool1, rowsFromPool2;
+            try {
+                [rowsFromPool] = await pool.query(
+                    `SELECT * FROM ${tableName} WHERE MOBILE = ?`,
+                    [number]
+                );
+            } catch (error) {
+                console.error("Error querying pool:", error.message);
+                rowsFromPool = []; // Empty array to continue processing
+            }
+            try {
+                [rowsFromPool1] = await pool1.query(
+                    `SELECT * FROM ${tableName} WHERE MOBILE = ?`,
+                    [number]
+                );
+            } catch (error) {
+                console.error("Error querying pool1:", error.message);
+                rowsFromPool1 = []; // Empty array to continue processing
+            }
+            try {
+                [rowsFromPool2] = await pool2.query(
+                    `SELECT * FROM ${tableName} WHERE MOBILE = ?`,
+                    [number]
+                );
+            } catch (error) {
+                console.error("Error querying pool2:", error.message);
+                rowsFromPool2 = []; // Empty array to continue processing
+            }
 
-            // Query the second database (pool1)
-            const [rowsFromPool1, fieldsFromPool1] = await pool1.query(
-                `SELECT * FROM ${tableName} WHERE MOBILE = ?`,
-                [number]
-            );
-
-            // Combine data from both databases
-            combinedData = [...rowsFromPool, ...rowsFromPool1];
+            // Combine data from all databases
+            combinedData = [
+                ...rowsFromPool,
+                ...rowsFromPool1,
+                ...rowsFromPool2,
+            ];
         }
 
         if (combinedData.length > 0) {
