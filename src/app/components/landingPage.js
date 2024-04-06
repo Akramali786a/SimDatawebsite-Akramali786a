@@ -55,7 +55,7 @@ export default function LandingPage() {
             <h1 className="text-uppercase text-center fw-semibold ">
                 Welcome To Pak Data
             </h1>
-            <h5 ref={el} className="mt-4 mb-4 text-center">
+            <h5 ref={el} className="mt-4 typedJs mb-4 text-center">
                 Discover, Explore, Connect: Empowering You with Pak Data
                 Insights!
             </h5>
