@@ -6,7 +6,7 @@ import LandingPage from "./components/landingPage";
 const App = () => {
     return (
         <>
-            <div id="hero" className="main1 min-min-vh-100 text-white">
+            <div id="hero" className="main1 text-white">
                 <div className="container z-1">
                     <div className="row">
                         <div className="col-md-6">

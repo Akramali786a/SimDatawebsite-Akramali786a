@@ -16,7 +16,7 @@ div.main {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
+  height: 100svh;
   padding: 10px !important;
   background: #536976;
   background: -webkit-linear-gradient(to right, #292E49, #536976);
