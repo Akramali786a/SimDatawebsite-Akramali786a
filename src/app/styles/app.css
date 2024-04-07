@@ -29,6 +29,7 @@
 
 .typedJs {
     height: 75px;
+    color: aquamarine;
 }
 
 form {
@@ -41,13 +42,22 @@ form {
     flex-direction: column;
 }
 
+
+
 form .field {
     width: 100%;
+    color: white;
     display: flex;
+    background: transparent;
+    border: 2px solid cornflowerblue;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 
 form .field select {
+    color: white;
+    background: transparent;
     width: 50%;
     font-size: 15px;
     cursor: pointer;
@@ -59,19 +69,32 @@ form .field select {
 
 form .field select option {
     cursor: pointer;
+    color: rgb(20, 125, 211);
+}
+
+form .field select option::-webkit-scrollbar {
+    display: noen;
 }
 
 form .field input {
+    color: white;
+    background: transparent;
     width: 100%;
-    /* border-radius: 8px; */
+    border-left: 1px solid steelblue;
+    border-bottom: none;
+    border-top: none;
+    border-right: none;
     padding: 10px;
-    /* height: 39px; */
-    border: none;
     outline: none;
     padding-left: 10px;
     font-size: 18px;
     border-bottom-right-radius: 10px;
 }
+
+form .field input::placeholder {
+    color: rgb(17, 175, 175);
+}
+
 
 form button {
     width: 100%;
@@ -144,6 +167,7 @@ form button:hover::before {
     border: 2px solid yellowgreen;
     position: relative;
     overflow: hidden;
+    font-size: 17px;
     color: #2193b0;
 }
 
@@ -164,4 +188,12 @@ form button:hover::before {
 
 .advBtn:hover::before {
     transform: scaleX(1);
+}
+
+@media (max-width:500px) {
+
+    .protectbtn,
+    .advBtn {
+        font-size: 16px;
+    }
 }

@@ -9,7 +9,7 @@ const App = () => {
             <div id="hero" className="main1 text-white">
                 <div className="container z-1">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-6 mt-md-4 mt-0">
                             <LandingPage />
                         </div>
 
