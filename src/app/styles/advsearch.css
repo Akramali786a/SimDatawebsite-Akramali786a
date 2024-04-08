@@ -1,29 +1,18 @@
 .hero {
-    background: url(/bg.jpg);
-    height: 100svh;
+
+    height: calc(100svh - 60px);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
-    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    overflow: hidden;
 }
 
 
-
-.hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.74);
-    height: 100%;
-    width: 100%;
-    z-index: -1;
-}
 
 .hero h2 {
     color: white;

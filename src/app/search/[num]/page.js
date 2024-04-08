@@ -1,4 +1,5 @@
 import BackBTN from "@/app/components/backBTN";
+import { usePathname } from "next/navigation";
 import React from "react";
 import("../../styles/search.css");
 const searchData = async (num) => {
