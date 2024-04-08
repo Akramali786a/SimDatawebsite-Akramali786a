@@ -77,10 +77,12 @@ form .field select option::-webkit-scrollbar {
 }
 
 form .field input {
+    text-align: center;
+    letter-spacing: 2px;
     color: white;
     background: transparent;
     width: 100%;
-    border-left: 1px solid steelblue;
+    border-left: 2px solid cornflowerblue;
     border-bottom: none;
     border-top: none;
     border-right: none;

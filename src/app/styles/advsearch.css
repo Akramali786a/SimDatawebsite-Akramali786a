@@ -1,0 +1,141 @@
+.hero {
+    background: url(/bg.jpg);
+    height: 100svh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.74);
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+
+.hero h2 {
+    color: white;
+    margin-bottom: 12px;
+}
+
+.form {
+    /* background: red; */
+    padding: 10px;
+
+    width: 60%;
+}
+
+.form .fields {
+    display: flex;
+    align-content: center;
+    margin-bottom: 20px;
+    color: white;
+    border: 2px solid #20bdff;
+    border-top-left-radius: 12px;
+    height: 50px;
+}
+
+.form .fields select {
+    color: lightblue;
+    outline: none;
+    padding: 10px;
+    background: transparent;
+    width: 35%;
+    padding: 10px;
+    border-top-left-radius: 12px;
+    border: none;
+    cursor: pointer;
+}
+
+.form .fields option {
+    color: black;
+}
+
+.form .fields input {
+    color: white !important;
+    border-left: 2px solid #20bdff;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    flex: 1;
+    font-size: 17px;
+    outline: none;
+    letter-spacing: 2px;
+
+    background: transparent;
+    padding-left: 20px;
+}
+
+.form .fields input::placeholder {
+    color: lightblue;
+    letter-spacing: 0;
+}
+
+.form button {
+    border: 2px solid yellowgreen;
+    outline: none;
+    padding: 6px;
+    width: 100%;
+    font-size: 17px;
+    overflow: hidden;
+    letter-spacing: 1px;
+    border-top-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background: transparent;
+    color: white;
+    position: relative;
+    height: 50px;
+    z-index: 1;
+}
+
+.form button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    z-index: -1;
+    height: 100%;
+    background: #20bdff;
+    transition: .3s all ease-in;
+}
+
+.form button:hover::before {
+    width: 100%;
+}
+
+
+@media (max-width:600px) {
+    .form {
+        width: 100%;
+        padding: 0;
+    }
+}
+
+@media (max-width:350px) {
+    .form button {
+        font-size: 15px;
+    }
+
+    .form .fields select {
+        font-size: 14px;
+    }
+
+    .form .fields input {
+        padding-left: 8px;
+        font-size: 14px;
+        text-align: start;
+    }
+}

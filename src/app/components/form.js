@@ -17,7 +17,7 @@ export default function Form() {
                 });
 
                 const data = await req.json();
-                console.log(data);
+
                 // Replace old data with new data
                 if (data.status === "success") {
                     setOption(data.data);
@@ -64,7 +64,7 @@ export default function Form() {
             strings: [
                 "Discover the versatility of Basic Search! Easily retrieve number details and explore advanced options like address, CNIC, and name searches.",
             ],
-            typeSpeed: 50,
+            typeSpeed: 20,
             cursorChar: "",
         });
         return () => {
@@ -85,7 +85,11 @@ export default function Form() {
                 ref={el}
                 style={{ color: "skyblue" }}
                 className="text-upper mb-1"
-            ></p>
+            >
+                Discover the versatility of Basic Search! Easily retrieve number
+                details and explore advanced options like address, CNIC, and
+                name searches.
+            </p>
             <form onSubmit={(r) => r.preventDefault()}>
                 <div className="field">
                     <select

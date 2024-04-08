@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 export default function LandingPage() {
     const router = useRouter();
-    console.log(router);
+
     const slogans = [
         "Unlocking the Secrets: Your Gateway to Uncharted Data Realms!",
         "Navigate the Unknown: Dive Deep into Pak Data's Rich Resources!",
@@ -73,12 +73,7 @@ export default function LandingPage() {
                     Protect My Data
                 </button>
                 <button
-                    onClick={() =>
-                        showToast(
-                            "warning",
-                            "Stay tuned! This feature is currently in development."
-                        )
-                    }
+                    onClick={() => router.push("/search")}
                     type="button"
                     className="btn ms-2 advBtn "
                 >
