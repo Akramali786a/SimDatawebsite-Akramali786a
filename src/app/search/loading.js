@@ -3,7 +3,7 @@ import("../styles/search.css");
 const Loading = () => {
     return (
         <>
-             <div className="main">
+            <div className="main">
                 <div className="table-responsive">
                     <table border={1}>
                         <tbody>
@@ -27,11 +27,10 @@ const Loading = () => {
                                 <td>Searching</td>
                             </tr>
 
-                        <tr>
-                            <th>ADDRESS</th>
-                            <td>Searching</td>
-                        </tr>
-
+                            <tr>
+                                <th>ADDRESS</th>
+                                <td>Searching</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

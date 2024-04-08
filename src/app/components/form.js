@@ -85,11 +85,7 @@ export default function Form() {
                 ref={el}
                 style={{ color: "skyblue" }}
                 className="text-upper mb-1"
-            >
-                Discover the versatility of Basic Search! Easily retrieve number
-                details and explore advanced options like address, CNIC, and
-                name searches.
-            </p>
+            ></p>
             <form onSubmit={(r) => r.preventDefault()}>
                 <div className="field">
                     <select
