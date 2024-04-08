@@ -86,7 +86,7 @@ form .field input::placeholder {
 }
 
 
-form button {
+form .submitBtn {
     width: 100%;
     margin-top: 20px;
     padding: 10px;
@@ -103,13 +103,13 @@ form button {
     z-index: 1;
 }
 
-form button::before {
+form .submitBtn::before {
     content: "";
     position: absolute;
     height: 100%;
     width: 100%;
     top: 0;
-    left: 0;
+    right: 0;
     background: #2193b0;
     /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #6dd5ed, #2193b0);
@@ -118,10 +118,10 @@ form button::before {
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     z-index: -1;
     transform: scaleX(0);
-    transition: .5s all ease-in-out;
+    transition: .3s all ease-in-out;
 }
 
-form button:hover::before {
+form .submitBtn:hover::before {
     transform: scaleX(1);
 }
 
@@ -158,14 +158,15 @@ form button:hover::before {
     position: relative;
     overflow: hidden;
     font-size: 17px;
-    color: #2193b0;
+    color: #e7e7e7;
+    z-index: 1;
 }
 
 .advBtn::before {
     content: "";
     width: 100%;
     height: 100%;
-    background: rgb(80, 102, 35);
+    background: rgb(76, 114, 0);
     position: absolute;
     top: 0;
     left: 0;

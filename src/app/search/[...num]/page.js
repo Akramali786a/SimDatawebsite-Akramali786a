@@ -1,5 +1,5 @@
 import BackBTN from "@/app/components/backBTN";
-import { usePathname } from "next/navigation";
+
 import React from "react";
 import("../../styles/search.css");
 const searchData = async (num) => {
@@ -21,10 +21,11 @@ const searchData = async (num) => {
     return data;
 };
 
-const Page = async ({ params }) => {
-    const { num } = params;
+const Page = async (props) => {
+    const { num } = props.params;
+    const [route, number, searchBy, limit] = num;
 
-    const userData = await searchData(num);
+    const userData = await searchData(number);
 
     return (
         <div className="main">
