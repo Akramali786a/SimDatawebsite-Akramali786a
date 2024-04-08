@@ -28,6 +28,7 @@
 
 .form .fields {
     display: flex;
+    flex-wrap: wrap;
     align-content: center;
     margin-bottom: 20px;
     color: white;
@@ -36,13 +37,14 @@
     height: 50px;
 }
 
-.form .fields select {
-    color: lightblue;
+.form select {
+    color: rgb(250, 250, 250);
     outline: none;
     padding: 10px;
-    background: transparent;
-    width: 35%;
-    padding: 10px;
+    background: #20bdff;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 13px;
     border-top-left-radius: 12px;
     border: none;
     cursor: pointer;
@@ -54,7 +56,8 @@
 
 .form .fields input {
     color: white !important;
-    border-left: 2px solid #20bdff;
+    /* border-left: 2px solid #20bdff; */
+    border-left: none;
     border-top: none;
     border-right: none;
     border-bottom: none;
@@ -62,9 +65,9 @@
     font-size: 17px;
     outline: none;
     letter-spacing: 2px;
-
+    text-overflow: ellipsis;
     background: transparent;
-    padding-left: 20px;
+    padding-left: 10px;
 }
 
 .form .fields input::placeholder {
@@ -72,7 +75,7 @@
     letter-spacing: 0;
 }
 
-.form button {
+.form .submitBtn {
     border: 2px solid yellowgreen;
     outline: none;
     padding: 6px;
@@ -89,7 +92,7 @@
     z-index: 1;
 }
 
-.form button::before {
+.form .submitBtn::before {
     content: "";
     position: absolute;
     top: 0;
@@ -101,7 +104,7 @@
     transition: .3s all ease-in;
 }
 
-.form button:hover::before {
+.form .submitBtn:hover::before {
     width: 100%;
 }
 

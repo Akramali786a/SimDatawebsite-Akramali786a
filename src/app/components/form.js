@@ -114,7 +114,9 @@ export default function Form() {
                         maxLength={11}
                     />
                 </div>
-                <button onClick={handlesubmit}>Search</button>
+                <button className="submitBtn" onClick={handlesubmit}>
+                    Search
+                </button>
             </form>
 
             <ToastContainer
