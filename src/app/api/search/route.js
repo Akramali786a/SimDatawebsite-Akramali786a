@@ -38,6 +38,13 @@ const numdatabases = [
         password: "AVNS_Lkfg1IkFwc45v_Xrf8j",
         database: "NADRA",
     },
+    {
+        host: "mysql-28091021-faisalshahzadyt1-45e8.b.aivencloud.com",
+        port: "27439",
+        user: "avnadmin",
+        password: "AVNS_P3n1SclXh_BqnnRVDXL",
+        database: "NADRA",
+    },
 ];
 const cnicdatabases = [
     {
@@ -45,6 +52,21 @@ const cnicdatabases = [
         port: 17446,
         user: "avnadmin",
         password: "AVNS_gjraUgtyU_DEmrFlazF",
+        database: "NADRA",
+    },
+    {
+        host: "mysql-28091021-faisalshahzadyt1-45e8.b.aivencloud.com",
+        port: "27439",
+        user: "avnadmin",
+        password: "AVNS_P3n1SclXh_BqnnRVDXL",
+        database: "NADRA",
+    },
+
+    {
+        host: "mysql-238491f1-project-4777.b.aivencloud.com",
+        port: "11166",
+        user: "avnadmin",
+        password: "AVNS_BTTcC09W2PQln_GMCmW",
         database: "NADRA",
     },
 ];

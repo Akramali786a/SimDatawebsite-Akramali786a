@@ -48,6 +48,88 @@ const Loading = () => {
                                 </td>
                             </tr>
                         </tbody>
+                        <br />
+                        <tbody>
+                            <tr>
+                                <th>ID</th>
+                                <td>
+                                    <Skeleton height={18} baseColor="#c9d6ff" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>MOBILE</th>
+                                <td>
+                                    <Skeleton height={18} baseColor="#c9d6ff" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>NAME</th>
+                                <td>
+                                    <Skeleton height={18} baseColor="#c9d6ff" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>CNIC</th>
+                                <td>
+                                    <Skeleton height={18} baseColor="#c9d6ff" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>ADDRESS</th>
+                                <td>
+                                    <Skeleton
+                                        height={18}
+                                        baseColor="#c9d6ff"
+                                        count={3}
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                        <br />
+                        <tbody>
+                            <tr>
+                                <th>ID</th>
+                                <td>
+                                    <Skeleton height={18} baseColor="#c9d6ff" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>MOBILE</th>
+                                <td>
+                                    <Skeleton height={18} baseColor="#c9d6ff" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>NAME</th>
+                                <td>
+                                    <Skeleton height={18} baseColor="#c9d6ff" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>CNIC</th>
+                                <td>
+                                    <Skeleton height={18} baseColor="#c9d6ff" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>ADDRESS</th>
+                                <td>
+                                    <Skeleton
+                                        height={18}
+                                        baseColor="#c9d6ff"
+                                        count={3}
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>

@@ -52,7 +52,7 @@ export default function Form() {
             return;
         }
 
-        navigation.push(`/search/basicSearch/${number}/mobile/1`);
+        navigation.push(`/search/basicSearch/${number}/number/1`);
     };
     const handleSelectChange = (event) => {
         setnum(event.target.value);
