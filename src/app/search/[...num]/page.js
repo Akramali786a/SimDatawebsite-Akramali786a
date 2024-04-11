@@ -2,7 +2,7 @@ import BackBTN from "@/app/components/backBTN";
 
 import React from "react";
 import("../../styles/search.css");
-const searchData = async (num) => {
+const searchData = async (num, filter, limit) => {
     const baseUrl =
         process.env.NODE_ENV === "production"
             ? "https://pakdata.vercel.app"
@@ -13,7 +13,7 @@ const searchData = async (num) => {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ number: num }),
+        body: JSON.stringify({ number: num, searchBy: filter, limit: limit }),
     });
 
     const data = await req.json();
@@ -25,43 +25,49 @@ const Page = async (props) => {
     const { num } = props.params;
     const [route, number, searchBy, limit] = num;
 
-    const userData = await searchData(number);
+    const userData = await searchData(number, searchBy, limit);
 
     return (
         <div className="main">
             {userData && userData.status === "success" && (
-                <div className="table-responsive">
-                    <table border={1}>
-                        {userData.data.map((user, index) => (
-                            <tbody key={index}>
-                                <tr>
-                                    <th>ID</th>
-                                    <td>{index + 1}</td>
-                                </tr>
-                                <tr>
-                                    <th>MOBILE</th>
-                                    <td>{user.MOBILE}</td>
-                                </tr>
-                                <tr>
-                                    <th>NAME</th>
-                                    <td>{user.NAME}</td>
-                                </tr>
-                                <tr>
-                                    <th>CNIC</th>
-                                    <td>{user.CNIC}</td>
-                                </tr>
-                                <tr>
-                                    <th>ADDRESS</th>
-                                    <td>
-                                        {user.ADDRESS ||
-                                            "ADDRESS NOT AVAILABLE"}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        ))}
-                    </table>
-                    <BackBTN />
-                </div>
+                <>
+                    <div className="table overflow-auto ">
+                        <table>
+                            {userData.data.map((user, index) => (
+                                <tbody key={index}>
+                                    <tr>
+                                        <th>ID</th>
+                                        <td>{index + 1}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>MOBILE</th>
+                                        <td>{user.MOBILE}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>NAME</th>
+                                        <td>{user.NAME}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>CNIC</th>
+                                        <td>{user.CNIC}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>ADDRESS</th>
+                                        <td>
+                                            {user.ADDRESS ||
+                                                "ADDRESS NOT AVAILABLE"}
+                                        </td>
+                                    </tr>
+                                    <br />
+                                </tbody>
+                            ))}
+                        </table>
+                    </div>
+
+                    <div className="btn">
+                        <BackBTN />
+                    </div>
+                </>
             )}
             {userData && userData.status === "error" && (
                 <>

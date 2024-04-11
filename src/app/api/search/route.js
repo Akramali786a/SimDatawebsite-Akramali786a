@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import mysql from "mysql2/promise";
 
 // Define database configurations
-const databases = [
+const numdatabases = [
     {
         host: "mysql-2d05bb08-ranjhaplaysyt-1cd6.a.aivencloud.com",
         port: 28431,
@@ -39,18 +39,25 @@ const databases = [
         database: "NADRA",
     },
 ];
+const cnicdatabases = [
+    {
+        host: "mysql-63ff40e-felibg-1091.b.aivencloud.com",
+        port: 17446,
+        user: "avnadmin",
+        password: "AVNS_gjraUgtyU_DEmrFlazF",
+        database: "NADRA",
+    },
+];
 
 // Create connection pools for all databases
-const pools = databases.map((config) => mysql.createPool(config));
+const numPools = numdatabases.map((config) => mysql.createPool(config));
+const cnicPools = cnicdatabases.map((config) => mysql.createPool(config));
 
 // Function to search for data in the databases
-async function searchDataInDatabases(number, tableName) {
+async function searchDataInPools(pools, query, parameters) {
     for (const pool of pools) {
         try {
-            const [rows] = await pool.query(
-                `SELECT * FROM ${tableName} WHERE MOBILE = ? LIMIT 1`,
-                [number]
-            );
+            const [rows] = await pool.query(query, parameters);
             if (rows.length > 0) {
                 return rows;
             }
@@ -61,13 +68,77 @@ async function searchDataInDatabases(number, tableName) {
     return [];
 }
 
+async function searchByNumber(number, limit) {
+    const searchLimit = parseInt(limit);
+
+    if (isNaN(searchLimit)) {
+        return {
+            status: "error",
+            message: "Invalid Limit Type",
+        };
+    }
+
+    if (number.length === 11 && number.startsWith("0")) {
+        number = number.slice(1);
+    }
+
+    const firstThreeDigits = number.substring(0, 3);
+    const tableName = `table_${firstThreeDigits}`;
+
+    const searchData = await searchDataInPools(
+        numPools,
+        `SELECT * FROM ${tableName} WHERE MOBILE = ? LIMIT ${searchLimit}`,
+        [number]
+    );
+
+    return searchData.length > 0
+        ? {
+              status: "success",
+              message: "Data found",
+              data: searchData,
+          }
+        : {
+              status: "error",
+              message: "User data not found",
+          };
+}
+
+async function searchByCnic(cnic, limit) {
+    const sanitizedCnic = cnic.trim();
+    const resultLimit = parseInt(limit);
+
+    if (sanitizedCnic.length !== 13) {
+        return {
+            status: "error",
+            message: "CNIC Number Must be 13 Digits Long.",
+        };
+    }
+
+    const tableName = `table_${sanitizedCnic.substring(0, 5)}`;
+    const totalRows = await searchDataInPools(
+        cnicPools,
+        `SELECT * FROM ${tableName} WHERE CNIC = ? OR MOBILE = ? LIMIT ${resultLimit}`,
+        [sanitizedCnic, sanitizedCnic]
+    );
+
+    return totalRows.length > 0
+        ? {
+              status: "success",
+              message: "CNIC Results Found",
+              data: totalRows,
+          }
+        : {
+              status: "error",
+              message: "No CNIC Results Found",
+          };
+}
+
 export async function POST(req) {
     try {
         const payload = await req.json();
-        let { number } = payload;
+        let { number, searchBy, limit } = payload;
 
-        // Validate and sanitize the input
-        number = number.replace(/\D/g, "");
+        number = number.replace(/\D/g, "").trim();
 
         if (!/^\d+$/.test(number)) {
             return NextResponse.json({
@@ -77,9 +148,8 @@ export async function POST(req) {
         }
 
         if (
-            number.length !== 10 &&
-            number.length !== 11 &&
-            number.length !== 13
+            (searchBy === "number" || searchBy === "cnic") &&
+            ![10, 11, 13].includes(number.length)
         ) {
             return NextResponse.json({
                 status: "error",
@@ -88,28 +158,16 @@ export async function POST(req) {
             });
         }
 
-        if (number.length === 11 && number.startsWith("0")) {
-            number = number.slice(1);
-        }
-
-        // Determine the table name based on the number
-        const firstThreeDigits = number.substring(0, 3);
-        const tableName = `table_${firstThreeDigits}`;
-
-        // Search for data in all databases
-        const searchData = await searchDataInDatabases(number, tableName);
-
-        if (searchData.length > 0) {
-            return NextResponse.json({
-                status: "success",
-                message: "Data found",
-                data: searchData,
-            });
-        } else {
-            return NextResponse.json({
-                status: "error",
-                message: "User data not found",
-            });
+        switch (searchBy) {
+            case "number":
+                return NextResponse.json(await searchByNumber(number, limit));
+            case "cnic":
+                return NextResponse.json(await searchByCnic(number, limit));
+            default:
+                return NextResponse.json({
+                    status: "error",
+                    message: "Invalid Filter Method.",
+                });
         }
     } catch (error) {
         console.error("Error:", error.message);
