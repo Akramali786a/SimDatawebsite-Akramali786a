@@ -1,6 +1,7 @@
 import BackBTN from "@/app/components/backBTN";
 
 import React from "react";
+import ActionBtns from "@/app/components/actionBtns";
 import("../../styles/search.css");
 const searchData = async (num, filter, limit) => {
     const baseUrl =
@@ -27,6 +28,7 @@ const Page = async (props) => {
 
     const userData = await searchData(number, searchBy, limit);
 
+
     return (
         <div className="main">
             {userData && userData.status === "success" && (
@@ -37,7 +39,10 @@ const Page = async (props) => {
                                 <tbody key={index}>
                                     <tr>
                                         <th>ID</th>
-                                        <td>{index + 1}</td>
+                                        <td className={"d-flex justify-content-between align-items-center"}>
+                                            <div className="index">{index + 1}</div>
+                                            <ActionBtns/>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>MOBILE</th>
@@ -58,6 +63,7 @@ const Page = async (props) => {
                                                 "ADDRESS NOT AVAILABLE"}
                                         </td>
                                     </tr>
+
                                     <br />
                                 </tbody>
                             ))}

@@ -44,8 +44,8 @@ export default function NavLinks() {
                 </li>
                 <li>
                     <Link
-                        className={path === "/contact" ? "active" : ""}
-                        href={"/contact"}
+                        className={path === "/chat" ? "active" : ""}
+                        href={"/chat"}
                     >
                         Chat
                     </Link>

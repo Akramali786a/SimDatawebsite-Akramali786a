@@ -59,7 +59,7 @@
     color: white !important;
     /* border-left: 2px solid #20bdff; */
     border-left: none;
-    /* border-left: 2px solid #20bdff; */
+
     border-left: none;
     border-top: none;
     border-right: none;
@@ -69,10 +69,10 @@
     outline: none;
     letter-spacing: 2px;
     text-overflow: ellipsis;
-    text-overflow: ellipsis;
+
     background: transparent;
     padding-left: 10px;
-    padding-left: 10px;
+
 }
 
 .form .fields input::placeholder {

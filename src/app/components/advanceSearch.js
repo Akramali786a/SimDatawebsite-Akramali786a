@@ -152,34 +152,34 @@ export default function AdvanceSearch() {
                 </div>
 
                 <select id="limit" onChange={(e) => setLimit(e.target.value)}>
-                    <option className="text-center" value="10">
+                    <option value="10">
                         Limit For Maximum Results (By Default : 10)
                     </option>
-                    <option className="text-center" value="20">
+                    <option value="20">
                         Max 20 Results
                     </option>
-                    <option className="text-center" value="30">
+                    <option value="30">
                         Max 30 Results
                     </option>
-                    <option className="text-center" value="40">
+                    <option value="40">
                         Max 40 Results
                     </option>
-                    <option className="text-center" value="50">
+                    <option value="50">
                         Max 50 Results
                     </option>
-                    <option className="text-center" value="60">
+                    <option value="60">
                         Max 60 Results
                     </option>
-                    <option className="text-center" value="70">
+                    <option value="70">
                         Max 70 Results
                     </option>
-                    <option className="text-center" value="80">
+                    <option value="80">
                         Max 80 Results
                     </option>
-                    <option className="text-center" value="90">
+                    <option value="90">
                         Max 90 Results
                     </option>
-                    <option className="text-center" value="100">
+                    <option value="100">
                         Max 100 Results
                     </option>
                 </select>
