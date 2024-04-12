@@ -27,9 +27,9 @@ export default function AdvanceSearch() {
             : option === "byADDRESS"
             ? "Enter The Address You Want To Search For!"
             : option === "byMALE"
-            ? "Enter the limit for results e.g 10"
+            ? "Optional : Name Of Person To Filter"
             : option === "byFEMALE"
-            ? "Enter the limit for results e.g 10"
+            ? "Optional : Name Of Person To Filter"
             : "Select an option"; // Default placeholder if none selected
 
     const type =
@@ -132,15 +132,7 @@ export default function AdvanceSearch() {
                     </option>
                 </select>
 
-                {option === "byMALE" ? (
-                    <div className="fields">
-                        <input type="text" placeholder={firstPh} />
-                    </div>
-                ) : option === "byFEMALE" ? (
-                    <div className="fields">
-                        <input type="text" placeholder={firstPh} />
-                    </div>
-                ) : null}
+
 
                 <div className="fields">
                     <input
@@ -182,6 +174,7 @@ export default function AdvanceSearch() {
                     <option value="100">
                         Max 100 Results
                     </option>
+
                 </select>
 
                 <button

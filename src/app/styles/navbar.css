@@ -29,7 +29,7 @@ nav ul {
 
 }
 
-box-icon {
+.navOpen,.navClose {
     display: none;
     cursor: pointer;
 }
@@ -83,7 +83,7 @@ nav ul li a.active::before {
 
 
 
-    box-icon {
+    .navOpen,.navClose {
         display: block;
     }
 

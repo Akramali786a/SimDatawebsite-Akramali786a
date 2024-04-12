@@ -8,8 +8,32 @@ import Navbar from "./components/Navbar";
 import Script from "next/script";
 
 export const metadata = {
-    title: "PAK DATA",
+    title: "PAK DATA  Instant SIM Details Retrieval",
     description: "GET SIM DETAILS INSTANTLY",
+    keywords:[
+        "Pakistan SIM verification",
+        "Verify SIM ownership (Pakistan)",
+        "SIM card details retrieval (Pakistan)",
+        "Government SIM verification portal (Pakistan)",
+        "Authorized SIM verification",
+        "Secure SIM information access",
+        "Legal verification of SIM cards (Pakistan)",
+        "Pakistan mobile phone registration check",
+        "CNIC verification for SIM (Pakistan)",
+        "PTA (Pakistan Telecommunication Authority) verified SIM"
+    ],
+    tags:[
+        "Pakistan SIM verification",
+        "Verify SIM ownership (Pakistan)",
+        "SIM card details retrieval (Pakistan)",
+        "Government SIM verification portal (Pakistan)",
+        "Authorized SIM verification",
+        "Secure SIM information access",
+        "Legal verification of SIM cards (Pakistan)",
+        "Pakistan mobile phone registration check",
+        "CNIC verification for SIM (Pakistan)",
+        "PTA (Pakistan Telecommunication Authority) verified SIM"
+    ]
 };
 
 export default function RootLayout({ children }) {
@@ -24,7 +48,9 @@ export default function RootLayout({ children }) {
                 <Script
                     src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"
                     defer={true}
+
                 />
+
             </body>
         </html>
     );

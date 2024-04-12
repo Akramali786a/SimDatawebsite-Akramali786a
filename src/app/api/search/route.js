@@ -167,6 +167,13 @@ export async function POST(req) {
         const payload = await req.json();
         let { number, searchBy, limit } = payload;
 
+        if (limit > 100) {
+            return NextResponse.json({
+                status: "error",
+                message: "Whoops! The limit can't be higher than 100. To see more results, try reducing the limit or making multiple requests."
+            });
+        }
+
         number = number.replace(/\D/g, "").trim();
 
         if (!/^\d+$/.test(number)) {

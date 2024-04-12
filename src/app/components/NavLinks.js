@@ -16,12 +16,12 @@ export default function NavLinks() {
                     onClick={() => setshowNav(false)}
                     color="white"
                     name="x"
-                    className="navClose"
+                    class="navClose"
                 ></box-icon>
             ) : (
                 <box-icon
                     size="md"
-                    className="navOpen"
+                    class="navOpen"
                     onClick={() => setshowNav(true)}
                     color="white"
                     name="menu-alt-right"

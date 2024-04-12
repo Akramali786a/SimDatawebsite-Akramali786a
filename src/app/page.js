@@ -3,6 +3,27 @@ import Form from "./components/form";
 import("./styles/app.css");
 import LandingPage from "./components/landingPage";
 
+export const metadata = {
+    title:"Pak Data Instant Pakistani Mobile Number Lookup (Government Authorized)",
+    description : "Easily discover details of Pakistani numbers with Sim Owner Details online. CNIC data, location tracking for quick, accurate info on Pakistan SIM owners quickly with PAK SERVICES.",
+    keywords:[
+        "pakistan sim verification",
+        "pakistan mobile number verification",
+        "pakistan sim lookup",
+        "pakistan mobile number lookup",
+        "verify sim ownership pakistan",
+        "confirm sim registration pakistan",
+        "check sim owner details pakistan",
+        "pakistan sim card verification",
+        "pakistan sim registration verification",
+        "official pakistan sim verification",
+        "secure pakistan sim verification",
+        "authorized pakistan sim verification",
+        "pakistani sim details",
+        "pakistani mobile number details"
+    ]
+}
+
 const App = () => {
     return (
         <>

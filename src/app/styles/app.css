@@ -61,11 +61,11 @@ form .field select option {
 }
 
 form .field select option::-webkit-scrollbar {
-    display: noen;
+    display: none;
 }
 
 form .field input {
-    text-align: center;
+
     letter-spacing: 2px;
     color: white;
     background: transparent;

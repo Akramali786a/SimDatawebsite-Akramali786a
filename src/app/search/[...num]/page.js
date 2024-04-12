@@ -3,6 +3,7 @@ import BackBTN from "@/app/components/backBTN";
 import React from "react";
 import ActionBtns from "@/app/components/actionBtns";
 import("../../styles/search.css");
+import { ToastContainer, toast } from "react-toastify";
 const searchData = async (num, filter, limit) => {
     const baseUrl =
         process.env.NODE_ENV === "production"
@@ -36,41 +37,44 @@ const Page = async (props) => {
                     <div className="table overflow-auto ">
                         <table>
                             {userData.data.map((user, index) => (
-                                <tbody key={index}>
-                                    <tr>
-                                        <th>ID</th>
-                                        <td className={"d-flex justify-content-between align-items-center"}>
-                                            <div className="index">{index + 1}</div>
-                                            <ActionBtns/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>MOBILE</th>
-                                        <td>{user.MOBILE}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>NAME</th>
-                                        <td>{user.NAME}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>CNIC</th>
-                                        <td>{user.CNIC}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>ADDRESS</th>
-                                        <td>
-                                            {user.ADDRESS ||
-                                                "ADDRESS NOT AVAILABLE"}
-                                        </td>
-                                    </tr>
+                                   <tbody key={index}>
+                                   <tr>
+                                       <th>ID</th>
+                                       <td className={"d-flex position-relative justify-content-between align-items-center"}>
+                                           <div className="index">{index + 1}</div>
+                                           <ActionBtns data={user}/>
+                                       </td>
+                                   </tr>
+                                   <tr>
+                                       <th>MOBILE</th>
+                                       <td>{user.MOBILE}</td>
+                                   </tr>
+                                   <tr>
+                                       <th>NAME</th>
+                                       <td>{user.NAME}</td>
+                                   </tr>
+                                   <tr>
+                                       <th>CNIC</th>
+                                       <td>{user.CNIC}</td>
+                                   </tr>
+                                   <tr>
+                                       <th>ADDRESS</th>
+                                       <td>
+                                           {user.ADDRESS ||
+                                               "ADDRESS NOT AVAILABLE"}
+                                       </td>
+                                   </tr>
+                                   <tr style={{background:"transparent"}}>
+                                       <div className={"mb-2"}></div>
+                                   </tr>
 
-                                    <br />
-                                </tbody>
+
+                                   </tbody>
                             ))}
                         </table>
                     </div>
 
-                    <div className="btn">
+                    <div className="bkbtn">
                         <BackBTN />
                     </div>
                 </>
