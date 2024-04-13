@@ -75,6 +75,12 @@ const cnicdatabases = [
         user: "avnadmin",
         password: "AVNS_-Ulq2wZOxDOnIRGnmcI",
         database: "NADRA",
+    },{
+        host: "mysql-2a81e8ae-kravify-ad30.b.aivencloud.com",
+        port: "20455",
+        user: "avnadmin",
+        password: "AVNS_qs6s7YoNXqhRvRW4Ddd",
+        database: "NADRA",
     },
 ];
 

@@ -52,8 +52,8 @@ export default function NavLinks() {
                 </li>
                 <li>
                     <Link
-                        className={path === "/login" ? "active" : ""}
-                        href={"/login"}
+                        className={path === "/others" ? "active" : ""}
+                        href={"/others"}
                     >
                         Other
                     </Link>

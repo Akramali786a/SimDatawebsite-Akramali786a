@@ -131,10 +131,13 @@ form .submitBtn:hover::before {
     border: 2px solid teal;
     cursor: pointer;
     position: relative;
+    outline: none;
     overflow: hidden;
     z-index: 1;
 }
-
+.protectbtn:active{
+    outline: none;
+}
 .protectbtn::before {
     content: "";
     width: 100%;
@@ -144,6 +147,7 @@ form .submitBtn:hover::before {
     top: 0;
     left: 0;
     z-index: -1;
+    outline: none;
     border: 2px solid yellowgreen;
     transition: .3s all ease-in;
     transform: scaleX(0);
@@ -158,6 +162,7 @@ form .submitBtn:hover::before {
     position: relative;
     overflow: hidden;
     font-size: 17px;
+    outline: none;
     color: #e7e7e7;
     z-index: 1;
 }
