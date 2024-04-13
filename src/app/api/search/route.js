@@ -75,7 +75,8 @@ const cnicdatabases = [
         user: "avnadmin",
         password: "AVNS_-Ulq2wZOxDOnIRGnmcI",
         database: "NADRA",
-    },{
+    },
+    {
         host: "mysql-2a81e8ae-kravify-ad30.b.aivencloud.com",
         port: "20455",
         user: "avnadmin",
@@ -176,7 +177,8 @@ export async function POST(req) {
         if (limit > 100) {
             return NextResponse.json({
                 status: "error",
-                message: "Whoops! The limit can't be higher than 100. To see more results, try reducing the limit or making multiple requests."
+                message:
+                    "Whoops! The limit can't be higher than 100. To see more results, try reducing the limit or making multiple requests.",
             });
         }
 

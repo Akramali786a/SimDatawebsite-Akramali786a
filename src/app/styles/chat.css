@@ -1,0 +1,128 @@
+section.hero{
+    height: calc(100svh - 60px);
+    background: #0F2027;
+    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
+    background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+}
+
+section.hero .messagesArea{
+    max-height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+
+}
+
+section.hero .messagesArea .message {
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 16px;
+    max-width: 50%;
+    position: relative;
+}
+section.hero .messagesArea .message.incoming{
+    clear: both;
+    float: left;
+}
+
+section.hero .messagesArea .message.outgoing{
+    clear: both;
+    float: right;
+}
+section.hero .messagesArea .message span {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+section.hero .messagesArea .message p {
+    margin: 8px 0;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+section.hero .messagesArea .message code {
+    font-family: monospace;
+    background-color: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+
+section.hero .sendArea{
+    border-top: 2px solid whitesmoke;
+    height: 10%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    background: #f2f2f2;
+    position: relative;
+}
+section.hero .sendArea .topScroller{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+section.hero .sendArea .topScroller.show{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    position: absolute;
+    top: -90px;
+    right: 3%;
+    background: cornflowerblue;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:50px;
+    border-radius: 50%;
+    transition: .2s all ease-in;
+    cursor: pointer;
+    border: 3px solid transparent;
+}
+section.hero .sendArea .topScroller.show:hover{
+    border: 3px solid #ffffff;
+}
+section.hero .sendArea .topScroller.show box-icon{
+    height: 60%;
+    width: 60%;
+}
+
+
+
+section.hero .sendArea input{
+    flex: 6;
+    height: 80%;
+    outline: none;
+    background: transparent;
+    border: none;
+    /*border-right: 2px solid #0ca4b8;*/
+    padding: 0 10px;
+}
+
+section.hero .sendArea .sendDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+
+}
+
+section.hero .sendArea .sendDiv box-icon{
+    height: 90%;
+    cursor: pointer;
+    width: 90%;
+}
+
+@media (max-width: 500px) {
+    section.hero .messagesArea .message{
+        max-width: 100%;
+    }
+}
