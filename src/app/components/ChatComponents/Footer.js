@@ -1,36 +1,64 @@
 "use client";
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+
 
 function Footer(props) {
-
+    const {messages,setMessages,name} = props;
+    const [message, setMessage] = useState("")
     const {pref} = props;
     const topScroller = useRef(null)
 
-    useEffect(() => {
-        const handleScroll = () => {
-            // Check if pref is not fully scrolled by comparing its offsetTop to the scroll position
-            if (pref.current && pref.current.offsetTop > window.scrollY) {
-                topScroller.current.classList.add('show');
-            } else {
-                topScroller.current.classList.remove('show');
+
+
+    const handleMessageSend = () => {
+
+        if(message.trim() === ""){
+            return
+        }
+
+        const newMessage = {
+            name: name,
+            message: message.trim()
+        };
+
+        // Update state by adding the new message to the existing messages
+        setMessages(prevMessages => [...prevMessages, newMessage]);
+
+        // Store the updated array of messages back into localStorage
+        localStorage.setItem("Messages", JSON.stringify([...messages, newMessage]));
+
+        setMessage("");
+        setTimeout(()=>handleScrollClick(),500)
+    }
+
+    const handleScrollClick = ()=>{
+        pref.current.scrollTop = pref.current.scrollHeight;
+    }
+
+
+    useEffect(()=>{
+
+        const handleScroll = ()=>{
+            const isnotScrolledToBottom = pref.current.scrollHeight - pref.current.scrollTop > pref.current.clientHeight;
+
+            if (isnotScrolledToBottom){
+                topScroller.current.classList.add("show");
+            }else{
+                topScroller.current.classList.remove("show");
             }
-        };
+        }
 
-        // Add scroll event listener to window
-        window.addEventListener('scroll', handleScroll);
+        pref.current.addEventListener("scroll",handleScroll)
 
-        // Cleanup function to remove event listener when component unmounts
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+    })
+
     return (
         <div className={"sendArea"}>
-            <div ref={topScroller} className="topScroller">
-                <box-icon color={"#f2f2f2"} name='up-arrow-alt'></box-icon>
+            <div ref={topScroller} onClick={handleScrollClick} className="topScroller">
+                <box-icon color={"#f2f2f2"} name='down-arrow-alt'></box-icon>
             </div>
-            <input type="text" placeholder={"What's on your mind? Type your question here."} />
-            <div className="sendDiv">
+            <input type="text" value={message} onChange={(e)=>setMessage(e.target.value)} placeholder={"What's on your mind? Type your question here."} />
+            <div className="sendDiv" onClick={handleMessageSend}>
                 <box-icon name='send' color={"#7474bf"} ></box-icon>
             </div>
         </div>

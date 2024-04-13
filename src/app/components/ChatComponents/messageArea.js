@@ -1,22 +1,44 @@
 "use client";
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Message from "@/app/components/ChatComponents/Message";
 import Footer from "@/app/components/ChatComponents/Footer";
+import {useRouter} from "next/navigation";
 
 function MessageArea(props) {
-const pref = useRef(null)
+    const router = useRouter();
+    const [messages, setMessages] = useState([]);
+    const [name, setName] = useState("")
+    useEffect(() => {
+        const storedMessages = localStorage.getItem("Messages");
+        if (storedMessages) {
+            setMessages(JSON.parse(storedMessages));
+        }
+    },[]);
+
+    useEffect(() => {
+        const UserName = localStorage.getItem("name");
+        if(!UserName){
+            const askName = prompt("Please Write Your Name!");
+            if(!askName){
+                router.back();
+            }else{
+                localStorage.setItem("name",askName.trim());
+                setName(askName.trim());
+            }
+        }else{
+            setName(UserName);
+        }
+    }, []);
+
+    const pref = useRef(null)
     return (
         <>
             <div ref={pref} className="messagesArea">
-                <Message/>
-                <Message name={"Faisal"} side={"outgoing"}  />
-                <Message name={"Developer"} side={"incoming"}  />
-                <Message name={"Faisal"}  side={"outgoing"}  />
-                <Message name={"Developer"} side={"incoming"}  />
-                <Message name={"Faisal"} side={"outgoing"}  />
-                <Message name={"Developer"} side={"incoming"}  />
+                {messages.map((message,index)=>(
+                    <Message key={index} name={message.name} message={message.message} side={"incoming"}/>
+                ))}
             </div>
-            <Footer pref={pref} />
+            <Footer messages={messages} name={name} setMessages={setMessages} pref={pref} />
         </>
     );
 }
