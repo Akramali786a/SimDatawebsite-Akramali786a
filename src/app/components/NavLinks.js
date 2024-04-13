@@ -42,14 +42,14 @@ export default function NavLinks() {
                         Advance Search
                     </Link>
                 </li>
-                <li>
-                    <Link
-                        className={path === "/chat" ? "active" : ""}
-                        href={"/chat"}
-                    >
-                        Chat
-                    </Link>
-                </li>
+                {/*<li>*/}
+                {/*    <Link*/}
+                {/*        className={path === "/chat" ? "active" : ""}*/}
+                {/*        href={"/chat"}*/}
+                {/*    >*/}
+                {/*        Chat*/}
+                {/*    </Link>*/}
+                {/*</li>*/}
                 <li>
                     <Link
                         className={path === "/others" ? "active" : ""}
