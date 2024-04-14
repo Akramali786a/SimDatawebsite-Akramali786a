@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import AiResponse from "@/app/components/AIcomponents/aiResponse";
 import { useRouter } from "next/navigation";
+import UsePrism from "@/app/components/usePrism";
 
 function MessageArea(props) {
     const [message, setMessage] = useState("");
@@ -36,7 +37,7 @@ function MessageArea(props) {
             const response = await data.json();
             console.log(response.response)
             if (response.status === "success") {
-                // Update response state with actual response
+
                 setAiResponses(prevResponses => prevResponses.map(item => {
                     if (item.prompt === prompt && item.loading) {
                         return { ...item, response: response.response, loading: false };
@@ -113,6 +114,9 @@ function MessageArea(props) {
                     <box-icon name='send' color={"#7474bf"} ></box-icon>
                 </div>
             </div>
+
+            UsePrism()
+            <usePrism/>
         </>
     );
 }
