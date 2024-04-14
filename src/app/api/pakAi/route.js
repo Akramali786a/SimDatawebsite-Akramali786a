@@ -1,9 +1,13 @@
-import {GoogleGenerativeAI, HarmBlockThreshold, HarmCategory} from "@google/generative-ai";
-import {NextResponse} from "next/server";
+import {
+    GoogleGenerativeAI,
+    HarmBlockThreshold,
+    HarmCategory,
+} from "@google/generative-ai";
+import { NextResponse } from "next/server";
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
 
-const GenerateText = async (prompt,options)=>{
+const GenerateText = async (prompt, options) => {
     const genAI = new GoogleGenerativeAI(API_KEY);
     const safetySettings = [
         {
@@ -15,45 +19,44 @@ const GenerateText = async (prompt,options)=>{
             threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
         },
     ];
-    const model = genAI.getGenerativeModel({model:"gemini-pro"},safetySettings);
+    const model = genAI.getGenerativeModel(
+        { model: "gemini-pro" },
+        safetySettings
+    );
 
     try {
         const result = await model.generateContent(prompt);
         const response = await result.response;
+        console.log(response.functionCalls);
         const text = response.text();
         // console.log(text);
         return text;
-    }catch (error){
-        console.error('Error generating text:', error);
+    } catch (error) {
+        console.error("Error generating text:", error);
         return null;
-
     }
+};
 
-}
-
-
-export async function POST(req){
+export async function POST(req) {
     try {
         const payload = await req.json();
 
-        let {prompt} = payload;
+        let { prompt } = payload;
 
-        if(prompt === ""){
+        if (prompt === "") {
             return NextResponse.json({
-                status:"error",
-                message:"Please Enter Valid Prompt!"
+                status: "error",
+                message: "Please Enter Valid Prompt!",
             });
         }
 
         const request = await GenerateText(prompt);
         const replacedText = request
-            .replace(/\bGemini\b/gi, 'PAKAI') // Replace all occurrences of 'GEMINI' (case-insensitive)
-            .replace(/\bGoogle\b/g, 'PAKDATA'); // Replace all occurrences of 'Google' (case-insensitive)
+            .replace(/\bGemini\b/gi, "PAKAI") // Replace all occurrences of 'GEMINI' (case-insensitive)
+            .replace(/\bGoogle\b/g, "PAKDATA"); // Replace all occurrences of 'Google' (case-insensitive)
 
-
-        return NextResponse.json({status:"success",response:replacedText});
-
-    }catch (e) {
-        console.log(e)
+        return NextResponse.json({ status: "success", response: replacedText });
+    } catch (e) {
+        console.log(e);
     }
 }

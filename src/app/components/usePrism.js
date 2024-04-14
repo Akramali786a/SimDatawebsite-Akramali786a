@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
 // usePrism.js
-import { useEffect } from 'react';
-import Prism from 'prismjs';
+import { useEffect } from "react";
+import Prism from "prismjs";
 
 const usePrism = () => {
     useEffect(() => {
