@@ -52,10 +52,10 @@ export default function NavLinks() {
                 {/*</li>*/}
                 <li>
                     <Link
-                        className={path === "/others" ? "active" : ""}
-                        href={"/others"}
+                        className={path === "/ai" ? "active" : ""}
+                        href={"/ai"}
                     >
-                        Other
+                        PAK AI
                     </Link>
                 </li>
             </ul>

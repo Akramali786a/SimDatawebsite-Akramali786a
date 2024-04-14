@@ -12,7 +12,6 @@ function MessageArea(props) {
 
     const handleMessageSend = async () => {
         const prompt = message.trim();
-        const modifiedPrompt = "[user : ] "+prompt
 
         if (prompt === "") {
             return;
@@ -23,8 +22,9 @@ function MessageArea(props) {
 
         // Set loading state for the response
         setAiResponses(prevResponses => [...prevResponses, { prompt, loading: true }]);
-
+        handleScrollClick();
         try {
+
             const data = await fetch("/api/pakAi", {
                 method: "POST",
                 headers: {
@@ -34,7 +34,7 @@ function MessageArea(props) {
             });
 
             const response = await data.json();
-
+            console.log(response.response)
             if (response.status === "success") {
                 // Update response state with actual response
                 setAiResponses(prevResponses => prevResponses.map(item => {
@@ -64,8 +64,8 @@ function MessageArea(props) {
                 return item;
             }));
         }
-    };
 
+    };
     const handleScrollClick = () => {
         pref.current.scrollTop = pref.current.scrollHeight;
     };
@@ -83,23 +83,26 @@ function MessageArea(props) {
 
         pref.current.addEventListener("scroll", handleScroll);
 
-        // Cleanup
-        return () => {
-            pref.current.removeEventListener("scroll", handleScroll);
-        };
+
 
     }, []);
 
     return (
         <>
             <div ref={pref} className="chatArea">
-                {aiResponses.map((response, index) => {
-
-                        return(
-                            <AiResponse userPrompt={response.prompt} key={index} response={response.response} loading={response.loading}/>
-                            )
-                })}
+                {aiResponses.length > 0 ? (
+                    aiResponses.map((response, index) => (
+                        <AiResponse userPrompt={response.prompt} key={index} response={response.response} loading={response.loading}/>
+                    ))
+                ) : (
+                    <div className={"hero"} style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column"}}>
+                    <h3 style={{color:"#17dcd3"}}>Welcome To PAKAI</h3>
+                        <p style={{color:"cornflowerblue",fontSize:"17px"}}>Start Chat With Pak AI</p>
+                        <code>Note : This Page is Still In Development</code>
+                    </div>
+                )}
             </div>
+
 
             <div className={"sendArea"}>
                 <div ref={topScroller} onClick={handleScrollClick} className="topScroller">
