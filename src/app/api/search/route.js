@@ -51,11 +51,13 @@ async function searchByNumber(number, limit) {
     let dbsThatHaveThisTalbe = {};
 
     for (const db in tablesInNumDatabases) {
-        const dbConfig = numdatabases[db];
+        if (tablesInNumDatabases[db].includes(tableName)) {
+            const dbConfig = numdatabases[db];
 
-        dbsThatHaveThisTalbe[db] = dbConfig;
-        console.log(`Table ${tableName} Found In Number Database ${db}`);
-        console.log(`---------------------------------------------------`);
+            dbsThatHaveThisTalbe[db] = dbConfig;
+            console.log(`Table ${tableName} Found In Number Database ${db}`);
+            console.log(`---------------------------------------------------`);
+        }
     }
 
     if (dbsThatHaveThisTalbe.length === 0) {

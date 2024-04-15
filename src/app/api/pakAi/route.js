@@ -4,27 +4,27 @@ import {
     HarmCategory,
 } from "@google/generative-ai";
 import { NextResponse } from "next/server";
-import {error} from "next/dist/build/output/log";
 
-const API_KEY = process.env.GEMINI_API_KEY
+const API_KEY = process.env.GEMINI_API_KEY;
 
 const GenerateText = async (prompt, options) => {
     const genAI = new GoogleGenerativeAI(API_KEY);
 
-    const model = genAI.getGenerativeModel(
-        { model: "gemini-pro" }
-    );
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     try {
         const result = await model.generateContent(prompt);
         const response = await result.response;
         console.log(response.functionCalls);
         const text = response.text();
-        // console.log(text);
+        // If the response is empty or undefined, return an error message
+        if (!text) {
+            throw new Error("AI failed to generate a response.");
+        }
         return text;
     } catch (error) {
         console.error("Error generating text:", error);
-        return null;
+        return "Error While Generating The Response!!!";
     }
 };
 
@@ -50,8 +50,8 @@ export async function POST(req) {
     } catch (e) {
         console.log(e);
         return NextResponse.json({
-            status:"error",
-            message:e
-        })
+            status: "error",
+            message: e.message || "An unexpected error occurred.",
+        });
     }
 }

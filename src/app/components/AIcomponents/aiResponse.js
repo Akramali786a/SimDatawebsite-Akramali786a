@@ -7,8 +7,8 @@ function AiResponse({ response, userPrompt }) {
     const renderResponse = (response) => {
         let formattedResponse = response;
 
-        // Identify code blocks (unchanged)
-        const codeRegex = /`(.*?)`/gs;
+        // Identify code blocks
+        const codeRegex = /`([^`]*)`|<(.*?)>/gs;
         formattedResponse = formattedResponse.replace(
             codeRegex,
             (match, code) => {
@@ -16,12 +16,12 @@ function AiResponse({ response, userPrompt }) {
             }
         );
 
-        // Apply bold formatting (unchanged)
+        // Apply bold formatting
         const boldRegex = /\*\*(.*?)\*\*/gs;
         formattedResponse = formattedResponse.replace(
             boldRegex,
             (match, text) => {
-                return `<br/><strong>${text}</strong>`;
+                return `<strong>${text}</strong>`;
             }
         );
 
