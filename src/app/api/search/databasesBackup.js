@@ -1,6 +1,3 @@
-import { NextResponse } from "next/server";
-import mysql from "mysql2/promise";
-
 const numdatabases = {
     db1: {
         host: "mysql-2d05bb08-ranjhaplaysyt-1cd6.a.aivencloud.com",
@@ -104,40 +101,3 @@ const cnicdatabases = {
         database: "NADRA",
     },
 };
-
-const createPoolAndFetchTables = async (databases) => {
-    const pools = Object.values(databases).map((config) =>
-        mysql.createPool(config)
-    );
-    const tables = {};
-
-    for (const [dbNumber, pool] of Object.entries(databases)) {
-        const connection = await pools[
-            parseInt(dbNumber.substring(2)) - 1
-        ].getConnection();
-        const [rows] = await connection.query("SHOW TABLES");
-        connection.release();
-        tables[dbNumber] = rows.map((row) => row[Object.keys(row)[0]]);
-    }
-
-    return tables;
-};
-
-export async function POST(req) {
-    try {
-        const numTables = await createPoolAndFetchTables(numdatabases);
-        const cnicTables = await createPoolAndFetchTables(cnicdatabases);
-
-        return NextResponse.json({
-            numTables,
-            cnicTables,
-        });
-    } catch (error) {
-        console.error("Error:", error.message);
-        return NextResponse.json({
-            status: "error",
-            message: "An unexpected error occurred",
-            error: error.message,
-        });
-    }
-}

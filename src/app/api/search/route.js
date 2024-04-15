@@ -1,114 +1,34 @@
 import { NextResponse } from "next/server";
 import mysql from "mysql2/promise";
+import tablesInCNICDatabases from "./tablesinCnic";
+import tablesInNumDatabases from "./tablesinnumdbs";
+import cnicdatabases from "./cnicDbs";
+import numdatabases from "./numDbs";
 
-// Define database configurations
-const numdatabases = [
-    {
-        host: "mysql-2d05bb08-ranjhaplaysyt-1cd6.a.aivencloud.com",
-        port: 28431,
-        user: "avnadmin",
-        password: "AVNS_1MQ-ZTaBJtyzJXpRQys",
-        database: "NADRA",
-    },
-    {
-        host: "mysql-341e5eec-faisalshahzadyt-39e8.a.aivencloud.com",
-        port: 12918,
-        user: "avnadmin",
-        password: "AVNS_xMDhZvw0nqB-wL7eF0L",
-        database: "NADRA",
-    },
-    {
-        host: "mysql-3dc5a780-ranjhagaming44-ef10.a.aivencloud.com",
-        port: 24075,
-        user: "avnadmin",
-        password: "AVNS_af-sK2kQLb-IAVFSsNN",
-        database: "NADRA",
-    },
-    {
-        host: "mysql-1d488cc9-codewithfaisal4-2e4d.a.aivencloud.com",
-        port: 10160,
-        user: "avnadmin",
-        password: "AVNS_DwrwyKA4zjv0jOMp2Gm",
-        database: "NADRA",
-    },
-    {
-        host: "mysql-31ec2ba9-faisal447846-1a00.a.aivencloud.com",
-        port: "16285",
-        user: "avnadmin",
-        password: "AVNS_Lkfg1IkFwc45v_Xrf8j",
-        database: "NADRA",
-    },
-    {
-        host: "mysql-28091021-faisalshahzadyt1-45e8.b.aivencloud.com",
-        port: "27439",
-        user: "avnadmin",
-        password: "AVNS_P3n1SclXh_BqnnRVDXL",
-        database: "NADRA",
-    },
-];
-const cnicdatabases = [
-    {
-        host: "mysql-63ff40e-felibg-1091.b.aivencloud.com",
-        port: 17446,
-        user: "avnadmin",
-        password: "AVNS_gjraUgtyU_DEmrFlazF",
-        database: "NADRA",
-    },
-    {
-        host: "mysql-28091021-faisalshahzadyt1-45e8.b.aivencloud.com",
-        port: "27439",
-        user: "avnadmin",
-        password: "AVNS_P3n1SclXh_BqnnRVDXL",
-        database: "NADRA",
-    },
-
-    {
-        host: "mysql-238491f1-project-4777.b.aivencloud.com",
-        port: "11166",
-        user: "avnadmin",
-        password: "AVNS_BTTcC09W2PQln_GMCmW",
-        database: "NADRA",
-    },
-    {
-        host: "mysql-c90c836-etopys-1cb9.b.aivencloud.com",
-        port: "15909",
-        user: "avnadmin",
-        password: "AVNS_-Ulq2wZOxDOnIRGnmcI",
-        database: "NADRA",
-    },
-    {
-        host: "mysql-2a81e8ae-kravify-ad30.b.aivencloud.com",
-        port: "20455",
-        user: "avnadmin",
-        password: "AVNS_qs6s7YoNXqhRvRW4Ddd",
-        database: "NADRA",
-    },
-    {
-        host: "mysql-3a403e85-kravify-0f99.b.aivencloud.com",
-        user: "avnadmin",
-        port: 24080,
-        password: "AVNS_LIt98X8FrFCF2SUe4Kq",
-        database: "NADRA",
-    },
-];
-
-// Create connection pools for all databases
-const numPools = numdatabases.map((config) => mysql.createPool(config));
-const cnicPools = cnicdatabases.map((config) => mysql.createPool(config));
+console.clear();
 
 // Function to search for data in the databases
 async function searchDataInPools(pools, query, parameters) {
+    const results = [];
+
     for (const pool of pools) {
+        let connection;
         try {
-            const [rows] = await pool.query(query, parameters);
+            connection = await pool.getConnection();
+            const [rows] = await connection.query(query, parameters);
             if (rows.length > 0) {
-                return rows;
+                results.push(...rows);
             }
         } catch (error) {
             console.error(`Error querying database: ${error.message}`);
+        } finally {
+            if (connection) {
+                connection.release(); // Release the connection back to the pool
+            }
         }
     }
-    return [];
+
+    return results;
 }
 
 async function searchByNumber(number, limit) {
@@ -128,8 +48,29 @@ async function searchByNumber(number, limit) {
     const firstThreeDigits = number.substring(0, 3);
     const tableName = `table_${firstThreeDigits}`;
 
+    let dbsThatHaveThisTalbe = {};
+
+    for (const db in tablesInNumDatabases) {
+        const dbConfig = numdatabases[db];
+
+        dbsThatHaveThisTalbe[db] = dbConfig;
+        console.log(`Table ${tableName} Found In Number Database ${db}`);
+        console.log(`---------------------------------------------------`);
+    }
+
+    if (dbsThatHaveThisTalbe.length === 0) {
+        return {
+            status: "error",
+            message: "User data not found",
+        };
+    }
+
+    const filteredPools = Object.values(dbsThatHaveThisTalbe).map((config) =>
+        mysql.createPool(config)
+    );
+
     const searchData = await searchDataInPools(
-        numPools,
+        filteredPools,
         `SELECT * FROM ${tableName} WHERE MOBILE = ? LIMIT ${searchLimit}`,
         [number]
     );
@@ -158,8 +99,33 @@ async function searchByCnic(cnic, limit) {
     }
 
     const tableName = `table_${sanitizedCnic.substring(0, 5)}`;
+
+    let dbsThatHaveThisCNIC = {};
+
+    for (const db in tablesInCNICDatabases) {
+        if (tablesInCNICDatabases[db].includes(tableName)) {
+            const dbConfig = cnicdatabases[db];
+
+            dbsThatHaveThisCNIC[db] = dbConfig;
+
+            console.log(`Table ${tableName} Found in CNIC Database ${db}`);
+            console.log(`----------------------------------------------`);
+        }
+    }
+
+    if (dbsThatHaveThisCNIC.length === 0) {
+        return {
+            status: "error",
+            message: "No CNIC Results Found",
+        };
+    }
+
+    const filteredCnicPools = Object.values(dbsThatHaveThisCNIC).map((config) =>
+        mysql.createPool(config)
+    );
+
     const totalRows = await searchDataInPools(
-        cnicPools,
+        filteredCnicPools,
         `SELECT * FROM ${tableName} WHERE CNIC = ? OR MOBILE = ? LIMIT ${resultLimit}`,
         [sanitizedCnic, sanitizedCnic]
     );
@@ -176,9 +142,195 @@ async function searchByCnic(cnic, limit) {
           };
 }
 
+async function searchForFemales(number, limit) {
+    const searchLimit = parseInt(limit);
+
+    if (isNaN(searchLimit)) {
+        return {
+            status: "error",
+            message: "Invalid Limit Type",
+        };
+    }
+
+    if (number.length !== 5) {
+        return NextResponse.json({
+            status: "error",
+            message: "Please Enter Only 5 Digits Of CNIC",
+        });
+    }
+    const tableName = `table_${number}`;
+    let dbsthatHavethisTable = {};
+
+    for (const db in tablesInCNICDatabases) {
+        // console.log(db);
+        if (tablesInCNICDatabases[db].includes(tableName)) {
+            const dbConfig = cnicdatabases[db];
+
+            dbsthatHavethisTable[db] = dbConfig;
+            console.log(`Table '${tableName}' found in CNIC database '${db}'`);
+            console.log("--------------------------------------");
+        }
+    }
+
+    // console.log(dbsthatHavethisTable);
+    if (dbsthatHavethisTable.length === 0) {
+        return {
+            status: "error",
+            message: "No female results found",
+        };
+    }
+
+    const filterCNICPools = Object.values(dbsthatHavethisTable).map((config) =>
+        mysql.createPool(config)
+    );
+
+    const femaleResults = [];
+
+    // Iterate over each pool in cnicPools
+    for (const pool of filterCNICPools) {
+        try {
+            // Assuming there's a column named 'gender' which stores gender information
+            const [rows] = await pool.query(
+                `SELECT * FROM ${tableName} LIMIT ?`,
+                [searchLimit]
+            );
+
+            // Filter out male data based on the last character of CNIC and remove rows with null or empty values
+            const filteredRows = rows.filter(
+                (row) =>
+                    parseInt(row.CNIC.slice(-1)) % 2 === 0 &&
+                    Object.values(row).every(
+                        (value) => value !== null && value !== ""
+                    )
+            );
+
+            // Add filtered rows to results
+            femaleResults.push(...filteredRows);
+        } catch (error) {
+            console.error(`Error querying database: ${error.message}`);
+        }
+    }
+
+    // Deeply shuffle the female results
+    for (let i = femaleResults.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [femaleResults[i], femaleResults[j]] = [
+            femaleResults[j],
+            femaleResults[i],
+        ];
+    }
+
+    // Return random rows equal to the limit requested by the client
+    const randomFemaleResults = femaleResults.slice(0, searchLimit);
+
+    return randomFemaleResults.length > 0
+        ? {
+              status: "success",
+              message: "Female results found",
+              data: randomFemaleResults,
+          }
+        : {
+              status: "error",
+              message: "No female results found",
+          };
+}
+
+async function searchForMales(number, limit) {
+    const searchLimit = parseInt(limit);
+
+    if (isNaN(searchLimit)) {
+        return {
+            status: "error",
+            message: "Invalid Limit Type",
+        };
+    }
+
+    if (number.length !== 5) {
+        return NextResponse.json({
+            status: "error",
+            message: "Please Enter Only 5 Digits Of CNIC",
+        });
+    }
+    const tableName = `table_${number}`;
+
+    let dbsthatHavethisTable = {};
+
+    for (const db in tablesInCNICDatabases) {
+        // console.log(db);
+        if (tablesInCNICDatabases[db].includes(tableName)) {
+            const dbConfig = cnicdatabases[db];
+
+            dbsthatHavethisTable[db] = dbConfig;
+            console.log(`Table '${tableName}' found in CNIC database '${db}'`);
+            console.log("--------------------------------------");
+        }
+    }
+
+    if (dbsthatHavethisTable.length === 0) {
+        return { status: "error", message: "Not Male Record Found" };
+    }
+
+    // console.log(dbsthatHavethisTable);
+
+    const filterCNICPools = Object.values(dbsthatHavethisTable).map((config) =>
+        mysql.createPool(config)
+    );
+
+    const femaleResults = [];
+
+    // Iterate over each pool in cnicPools
+    for (const pool of filterCNICPools) {
+        try {
+            // Assuming there's a column named 'gender' which stores gender information
+            const [rows] = await pool.query(
+                `SELECT * FROM ${tableName} LIMIT ?`,
+                [searchLimit]
+            );
+
+            // Filter out male data based on the last character of CNIC and remove rows with null or empty values
+            const filteredRows = rows.filter(
+                (row) =>
+                    parseInt(row.CNIC.slice(-1)) % 2 !== 0 &&
+                    Object.values(row).every(
+                        (value) => value !== null && value !== ""
+                    )
+            );
+
+            // Add filtered rows to results
+            femaleResults.push(...filteredRows);
+        } catch (error) {
+            console.error(`Error querying database: ${error.message}`);
+        }
+    }
+
+    // Deeply shuffle the female results
+    for (let i = femaleResults.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [femaleResults[i], femaleResults[j]] = [
+            femaleResults[j],
+            femaleResults[i],
+        ];
+    }
+
+    // Return random rows equal to the limit requested by the client
+    const randomFemaleResults = femaleResults.slice(0, searchLimit);
+
+    return randomFemaleResults.length > 0
+        ? {
+              status: "success",
+              message: "Female results found",
+              data: randomFemaleResults,
+          }
+        : {
+              status: "error",
+              message: "No female results found",
+          };
+}
+
 export async function POST(req) {
     try {
         const payload = await req.json();
+
         let { number, searchBy, limit } = payload;
 
         if (limit > 100) {
@@ -189,31 +341,33 @@ export async function POST(req) {
             });
         }
 
-        number = number.replace(/\D/g, "").trim();
+        if (searchBy === "number" || searchBy === "cnic") {
+            number = number.replace(/\D/g, "").trim();
 
-        if (!/^\d+$/.test(number)) {
-            return NextResponse.json({
-                status: "error",
-                message: "Invalid input. Please provide a valid number.",
-            });
+            if (!/^\d+$/.test(number)) {
+                return NextResponse.json({
+                    status: "error",
+                    message: "Invalid input. Please provide a valid number.",
+                });
+            }
+
+            if (![10, 11, 13].includes(number.length)) {
+                return NextResponse.json({
+                    status: "error",
+                    message:
+                        "Invalid number format. Please enter an 11 or 13-digit number/CNIC.",
+                });
+            }
         }
-
-        if (
-            (searchBy === "number" || searchBy === "cnic") &&
-            ![10, 11, 13].includes(number.length)
-        ) {
-            return NextResponse.json({
-                status: "error",
-                message:
-                    "Invalid number format. Please enter an 11 or 13-digit number/CNIC.",
-            });
-        }
-
         switch (searchBy) {
             case "number":
                 return NextResponse.json(await searchByNumber(number, limit));
             case "cnic":
                 return NextResponse.json(await searchByCnic(number, limit));
+            case "male":
+                return NextResponse.json(await searchForMales(number, limit));
+            case "female":
+                return NextResponse.json(await searchForFemales(number, limit));
             default:
                 return NextResponse.json({
                     status: "error",

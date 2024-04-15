@@ -10,13 +10,6 @@ export default function AdvanceSearch() {
     const [value, setValue] = useState("");
     const [limit, setLimit] = useState(10);
 
-    const firstPh =
-        option === "byMALE"
-            ? "Optional : Name Of Person To Filter"
-            : null || option === "byFEMALE"
-            ? "Optional : Name Of Person To Filter"
-            : null;
-
     const placeholder =
         option === "byCNIC"
             ? "Enter 13 Digits CNIC Number"
@@ -27,9 +20,9 @@ export default function AdvanceSearch() {
             : option === "byADDRESS"
             ? "Enter The Address You Want To Search For!"
             : option === "byMALE"
-            ? "Optional : Name Of Person To Filter"
+            ? "Enter the first 5 digits of your CNIC to find results nearby."
             : option === "byFEMALE"
-            ? "Optional : Name Of Person To Filter"
+            ? "Enter the first 5 digits of your CNIC to find results nearby."
             : "Select an option"; // Default placeholder if none selected
 
     const type =
@@ -83,6 +76,10 @@ export default function AdvanceSearch() {
                         ? "Name"
                         : option === "byADDRESS"
                         ? "Address"
+                        : option === "byMALE"
+                        ? "CNIC Digits"
+                        : option === "byFEMALE"
+                        ? "CNIC Digits"
                         : "value"
                 }`
             );
@@ -100,10 +97,6 @@ export default function AdvanceSearch() {
         };
 
         const searchBy = searchByMap[option];
-        const additionalParams = {
-            num: searchParameter,
-            searchBy: searchBy,
-        };
 
         router.push(
             `/search/advanceSearch/${searchParameter}/${searchBy}/${limit}`
@@ -125,16 +118,24 @@ export default function AdvanceSearch() {
                         Search By Address (Not Working)
                     </option>
                     <option value="byMALE">
-                        Search For Males Only (Not Working)
+                        Search For Males Only (Working)
                     </option>
                     <option value="byFEMALE">
-                        Search For FeMales Only (Not Working)
+                        Search For FeMales Only (Working)
                     </option>
                 </select>
 
-
-
-                <div className="fields">
+                <div
+                    className="fields"
+                    style={{
+                        marginBottom:
+                            option === "byMALE"
+                                ? "0"
+                                : option === "byFEMALE"
+                                ? "0"
+                                : "20px",
+                    }}
+                >
                     <input
                         type={type}
                         value={value}
@@ -142,39 +143,41 @@ export default function AdvanceSearch() {
                         placeholder={placeholder}
                     />
                 </div>
+                {option === "byMALE" || option === "byFEMALE" ? (
+                    <i
+                        style={{ fontSize: "13px" }}
+                        className="text-white text-center mb-3"
+                    >
+                        We'll use the first 5 digits of your CNIC to detect your
+                        area and provide tailored results for a better
+                        experience. e.g : 38701
+                    </i>
+                ) : null}
 
-                <select id="limit" onChange={(e) => setLimit(e.target.value)}>
+                <select
+                    id="limit"
+                    style={{
+                        marginTop:
+                            option === "byMALE"
+                                ? "20px"
+                                : option === "byFEMALE"
+                                ? "20px"
+                                : "0px",
+                    }}
+                    onChange={(e) => setLimit(e.target.value)}
+                >
                     <option value="10">
                         Limit For Maximum Results (By Default : 10)
                     </option>
-                    <option value="20">
-                        Max 20 Results
-                    </option>
-                    <option value="30">
-                        Max 30 Results
-                    </option>
-                    <option value="40">
-                        Max 40 Results
-                    </option>
-                    <option value="50">
-                        Max 50 Results
-                    </option>
-                    <option value="60">
-                        Max 60 Results
-                    </option>
-                    <option value="70">
-                        Max 70 Results
-                    </option>
-                    <option value="80">
-                        Max 80 Results
-                    </option>
-                    <option value="90">
-                        Max 90 Results
-                    </option>
-                    <option value="100">
-                        Max 100 Results
-                    </option>
-
+                    <option value="20">Max 20 Results</option>
+                    <option value="30">Max 30 Results</option>
+                    <option value="40">Max 40 Results</option>
+                    <option value="50">Max 50 Results</option>
+                    <option value="60">Max 60 Results</option>
+                    <option value="70">Max 70 Results</option>
+                    <option value="80">Max 80 Results</option>
+                    <option value="90">Max 90 Results</option>
+                    <option value="100">Max 100 Results</option>
                 </select>
 
                 <button
