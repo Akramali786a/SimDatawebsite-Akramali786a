@@ -128,16 +128,11 @@ function MessageArea(props) {
                             flexDirection: "column",
                         }}
                     >
-                        <h3 style={{ color: "#17dcd3" }}>Welcome To PAKAI</h3>
-                        <p
-                            style={{
-                                color: "cornflowerblue",
-                                fontSize: "17px",
-                            }}
-                        >
-                            Start Chat With Pak AI
-                        </p>
-                        <code>Note : This Page is Still In Development</code>
+                        <div className="greet">
+                            <p><span>Welcome To PAK Ai</span></p>
+                            <p>How Can I Help You Today!</p>
+                        </div>
+
                     </div>
                 )}
             </div>

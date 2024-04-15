@@ -84,12 +84,12 @@ const cnicdatabases = [
         database: "NADRA",
     },
     {
-        host:"mysql-3a403e85-kravify-0f99.b.aivencloud.com",
+        host: "mysql-3a403e85-kravify-0f99.b.aivencloud.com",
         user: "avnadmin",
         port: 24080,
         password: "AVNS_LIt98X8FrFCF2SUe4Kq",
         database: "NADRA",
-    }
+    },
 ];
 
 // Create connection pools for all databases

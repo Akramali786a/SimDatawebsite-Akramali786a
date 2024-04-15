@@ -4,24 +4,15 @@ import {
     HarmCategory,
 } from "@google/generative-ai";
 import { NextResponse } from "next/server";
+import {error} from "next/dist/build/output/log";
 
-const API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
+const API_KEY = process.env.GEMINI_API_KEY
 
 const GenerateText = async (prompt, options) => {
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const safetySettings = [
-        {
-            category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-            threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-        },
-        {
-            category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-        },
-    ];
+
     const model = genAI.getGenerativeModel(
-        { model: "gemini-pro" },
-        safetySettings
+        { model: "gemini-pro" }
     );
 
     try {
@@ -58,5 +49,9 @@ export async function POST(req) {
         return NextResponse.json({ status: "success", response: replacedText });
     } catch (e) {
         console.log(e);
+        return NextResponse.json({
+            status:"error",
+            message:e
+        })
     }
 }

@@ -121,6 +121,27 @@ section.hero .sendArea .sendDiv box-icon{
     width: 90%;
 }
 
+
+div.hero .greet{
+    font-size: 53px;
+    text-transform: capitalize;
+    color: #c4c7c5;
+    font-weight: 500;
+
+}
+
+div.hero .greet span{
+    font-weight: 500;
+    background: -webkit-linear-gradient(272deg, #9cecfb, #65c7f7, #0052d4);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color: transparent;
+
+}
+
+
+
+
+
 @media (max-width: 800px) {
     section.hero .chatArea .response{
         max-width: 100%;
