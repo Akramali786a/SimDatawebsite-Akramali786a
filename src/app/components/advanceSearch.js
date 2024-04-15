@@ -148,8 +148,8 @@ export default function AdvanceSearch() {
                         style={{ fontSize: "13px" }}
                         className="text-white text-center mb-3"
                     >
-                        We'll use the first 5 digits of your CNIC to detect your
-                        area and provide tailored results for a better
+                        We&apos;ll use the first 5 digits of your CNIC to detect
+                        your area and provide tailored results for a better
                         experience. e.g : 38701
                     </i>
                 ) : null}
