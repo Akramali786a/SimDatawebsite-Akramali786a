@@ -54,7 +54,7 @@ export default function page() {
                             </p>
                             <p className="text-white">
                                 <span className="text-decoration-underline">
-                                    When you're on the Privacy List,
+                                    When you&apos;re on the Privacy List,
                                 </span>{" "}
                                 other users will only see basic information
                                 about you, such as your username (if
