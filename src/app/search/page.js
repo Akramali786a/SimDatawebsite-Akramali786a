@@ -1,12 +1,13 @@
 import AdvanceSearch from "../components/advanceSearch";
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import("@/app/styles/advsearch.css");
 
-export const  metadata = {
-    title:"Pak Data Authorized NADRA Data Retrieval (Pakistan Government)",
-    description:"Access authorized NADRA data (with proper credentials) through our secure government portal. Retrieve essential information for legitimate purposes.",
-    keywords:[
+export const metadata = {
+    title: "Pak Data Authorized NADRA Data Retrieval (Pakistan Government)",
+    description:
+        "Access authorized NADRA data (with proper credentials) through our secure government portal. Retrieve essential information for legitimate purposes.",
+    keywords: [
         "pakistan",
         "pakistan government",
         "mobile number",
@@ -26,20 +27,18 @@ export const  metadata = {
         "pakistan number lookup",
         "government agencies",
         "law enforcement",
-        "authorized users"
-    ]
-}
+        "authorized users",
+    ],
+};
 
 const Page = () => {
     return (
         <>
-        <div className="hero main">
-            <h2>Advance Search</h2>
+            <div className="hero main">
+                <h2>Advance Search</h2>
 
-            <AdvanceSearch />
-
-
-        </div>
+                <AdvanceSearch />
+            </div>
             <ToastContainer
                 position="bottom-right"
                 autoClose={5000}

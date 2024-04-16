@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+#hero {
+    min-height: calc(100svh - 60px);
+    background: #0F2027;
+    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
+    background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: auto;
+}
+
+#hero .mainHeading {
+    font-size: 54px;
+    color: white;
+}
+
+#hero .mainHeading span {
+    background: -webkit-linear-gradient(16deg, #027802, #0897a1);
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#hero #form {
+    /* background: red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+}
+
+#hero #form #inputum {
+    width: 60%;
+    border: 2px solid cornflowerblue;
+    padding: 5px;
+    border-top-left-radius: 18px;
+    border-bottom-right-radius: 16px;
+}
+
+#hero #form #inputum #numinput {
+    outline: none;
+    border: none;
+    height: 100%;
+    padding: 8px;
+    width: 100%;
+    background: transparent;
+    color: white;
+    letter-spacing: 2px;
+}
+
+#hero #form #inputum #numinput::placeholder {
+    color: antiquewhite;
+}
+
+#hero #form .submit {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 2px solid aliceblue;
+    padding: 8px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 8px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    cursor: pointer;
+}
+
+#hero #form .submit .btnSubmit {
+    flex: 1;
+    outline: none;
+    border: none;
+    background: transparent;
+    color: white;
+}
+
+#hero #form .submit::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 0;
+    background: royalblue;
+    transition: .3s all ease-in;
+    z-index: -1;
+}
+
+#hero #form .submit:hover::before {
+    width: 100%;
+}
+
+@media (max-width:600px) {
+    #hero #form #inputum {
+        width: 100%;
+    }
+
+}

@@ -61,12 +61,7 @@ export default function LandingPage() {
             </h5>
             <div className="d-flex align-items-center justify-content-center">
                 <button
-                    onClick={() =>
-                        showToast(
-                            "warning",
-                            "Stay tuned! This feature is currently in development."
-                        )
-                    }
+                    onClick={() => router.push("/protectme")}
                     type="button"
                     className="btn me-2 protectbtn"
                 >

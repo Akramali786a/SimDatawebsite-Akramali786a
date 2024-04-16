@@ -137,6 +137,7 @@ export default function AdvanceSearch() {
                     }}
                 >
                     <input
+                        className="searchnuminput"
                         type={type}
                         value={value}
                         onChange={(e) => setValue(e.target.value)}

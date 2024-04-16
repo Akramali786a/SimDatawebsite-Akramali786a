@@ -1,11 +1,10 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
 import BootstrapJs from "./components/bootstrapJs";
 import("bootstrap/dist/css/bootstrap.css");
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar";
 import Script from "next/script";
-
+import("./favicon.ico");
 export const metadata = {
     title: "PAK DATA  Instant SIM Details Retrieval",
     description: "GET SIM DETAILS INSTANTLY",

@@ -1,23 +1,29 @@
 export default function sitemap() {
-    const domainName = "pakservices.online"
+    const domainName = "pakservices.online";
     return [
         {
             url: `https://${domainName}`,
             lastModified: new Date(),
-            changeFrequency: 'yearly',
+            changeFrequency: "yearly",
             priority: 1,
         },
         {
             url: `https://${domainName}/search`,
             lastModified: new Date(),
-            changeFrequency: 'monthly',
+            changeFrequency: "monthly",
             priority: 0.8,
         },
         {
-            url: `https://${domainName}/chat`,
+            url: `https://${domainName}/ai`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: "weekly",
             priority: 0.5,
         },
-    ]
+        {
+            url: `https://${domainName}/protectme`,
+            lastModified: new Date(),
+            changeFrequency: "weekly",
+            priority: 0.5,
+        },
+    ];
 }

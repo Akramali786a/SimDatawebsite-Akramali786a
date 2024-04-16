@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import AiResponse from "@/app/components/AIcomponents/aiResponse";
 import { useRouter } from "next/navigation";
-import usePrism from "../usePrism";
 
 function MessageArea(props) {
     const [message, setMessage] = useState("");
@@ -129,10 +128,11 @@ function MessageArea(props) {
                         }}
                     >
                         <div className="greet">
-                            <p><span>Welcome To PAK Ai</span></p>
+                            <p>
+                                <span>Welcome To PAK Ai</span>
+                            </p>
                             <p>How Can I Help You Today!</p>
                         </div>
-
                     </div>
                 )}
             </div>

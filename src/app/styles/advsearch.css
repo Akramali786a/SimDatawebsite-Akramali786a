@@ -1,5 +1,4 @@
 .hero {
-
     height: calc(100svh - 60px);
     background-position: center;
     background-repeat: no-repeat;
@@ -59,7 +58,7 @@
     color: black;
 }
 
-.form .fields input {
+.form .fields .searchnuminput {
     color: white !important;
     /* border-left: 2px solid #20bdff; */
     border-left: none;
@@ -79,7 +78,7 @@
 
 }
 
-.form .fields input::placeholder {
+.form .fields .searchnuminput::placeholder {
     color: lightblue;
     letter-spacing: 0;
 }
@@ -139,7 +138,7 @@
         font-size: 14px;
     }
 
-    .form .fields input {
+    .form .fields .searchnuminput {
         padding-left: 8px;
         font-size: 14px;
         text-align: start;

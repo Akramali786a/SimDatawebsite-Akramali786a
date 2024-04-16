@@ -42,6 +42,14 @@ export default function NavLinks() {
                         Advance Search
                     </Link>
                 </li>
+                <li>
+                    <Link
+                        className={path === "/protectme" ? "active" : ""}
+                        href={"/protectme"}
+                    >
+                        Protect My Data
+                    </Link>
+                </li>
                 {/*<li>*/}
                 {/*    <Link*/}
                 {/*        className={path === "/chat" ? "active" : ""}*/}
