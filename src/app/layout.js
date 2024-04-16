@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar";
 import Script from "next/script";
 import("./favicon.ico");
+import Adsense from "./components/Adsense";
 export const metadata = {
     title: "PAK DATA  Instant SIM Details Retrieval",
     description: "GET SIM DETAILS INSTANTLY",
@@ -33,10 +34,14 @@ export const metadata = {
         "PTA (Pakistan Telecommunication Authority) verified SIM",
     ],
 };
-
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
+            <head>
+                {process.env.NODE_ENV === "production" ? (
+                    <Adsense pid="ca-pub-7447453608219572" />
+                ) : null}
+            </head>
             <body>
                 <Navbar />
                 {children}
