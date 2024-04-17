@@ -55,17 +55,17 @@ export default function Page() {
                   Pak Services
                   <bdt className="block-component" />
                 </bdt>{" "}
-                  (<bdt className="block-component" />"<strong>we</strong>,&quot; &quot;
-                <strong>us</strong>,&quot; or &quot;<strong>our</strong>"
+                  (<bdt className="block-component" />&quot;<strong>we</strong>,&quot; &quot;
+                <strong>us</strong>,&quot; or &quot;<strong>our</strong>&quot;
                 <bdt className="statement-end-if-in-editor" />
               </span>
               <span data-custom-class="body_text">
                 ), describes how and why we might collect, store, use, and/or
                 share (
-                <bdt className="block-component" />"<strong>process</strong>&quot;
+                <bdt className="block-component" />&quot;<strong>process</strong>&quot;
                 <bdt className="statement-end-if-in-editor" />) your information
                 when you use our services (
-                <bdt className="block-component" />"<strong>Services</strong>&quot;
+                <bdt className="block-component" />&quot;<strong>Services</strong>&quot;
                 <bdt className="statement-end-if-in-editor" />
                 ), such as when you:
               </span>
@@ -4320,7 +4320,7 @@ export default function Page() {
                                                                               the
                                                                               section{" "}
                                                                                 <bdt className="block-component" />
-                                                                              "
+                                                                                &quot;
                                                                               <bdt className="statement-end-if-in-editor" />
                                                                             </span>
                                                                           </span>
