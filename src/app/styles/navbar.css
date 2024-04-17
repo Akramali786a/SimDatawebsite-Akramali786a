@@ -79,7 +79,7 @@ nav ul li a.active::before {
     height: 3px;
 }
 
-@media (max-width:600px) {
+@media (max-width:830px) {
 
 
 

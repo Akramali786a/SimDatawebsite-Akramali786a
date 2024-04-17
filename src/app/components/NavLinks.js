@@ -66,6 +66,14 @@ export default function NavLinks() {
                         PAK AI
                     </Link>
                 </li>
+                <li>
+                    <Link
+                        className={path === "/links" ? "active" : ""}
+                        href={"/links"}
+                    >
+                        UseFull Links
+                    </Link>
+                </li>
             </ul>
         </>
     );

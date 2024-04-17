@@ -44,7 +44,7 @@ export async function POST(req) {
         const request = await GenerateText(prompt);
         const replacedText = request
             .replace(/\bGemini\b/gi, "PAKAI") // Replace all occurrences of 'GEMINI' (case-insensitive)
-            .replace(/\bGoogle\b/g, "PAKDATA"); // Replace all occurrences of 'Google' (case-insensitive)
+            .replace(/\bGoogle\b/g, "PAKSERVICES"); // Replace all occurrences of 'Google' (case-insensitive)
 
         return NextResponse.json({ status: "success", response: replacedText });
     } catch (e) {

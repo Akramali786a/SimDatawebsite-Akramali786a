@@ -24,6 +24,16 @@ export default function sitemap() {
             lastModified: new Date(),
             changeFrequency: "weekly",
             priority: 0.5,
+        },{
+            url: `https://${domainName}/privacy_policy`,
+            lastModified: new Date(),
+            changeFrequency: "weekly",
+            priority: 0.5,
+        },{
+            url: `https://${domainName}/cookie_policy`,
+            lastModified: new Date(),
+            changeFrequency: "weekly",
+            priority: 0.5,
         },
     ];
 }
