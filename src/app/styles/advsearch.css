@@ -83,6 +83,96 @@
     letter-spacing: 0;
 }
 
+
+.form #customdropdown{
+    margin-top: 20px;
+    width: 100%;
+    height: 50px;
+    border-top-left-radius: 10px;
+    background: #20bdff;
+}
+
+.form #customdropdown #select-btn{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+    padding: 0 10px;
+    justify-content: space-between;
+    font-weight: 400;
+    font-size: 18px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.form #customdropdown #menu{
+    /*opacity: 0;*/
+    /*visibility: hidden;*/
+    /*pointer-events: none;*/
+    height: 150px;
+    width: 100%;
+    background: red;
+}
+
+.form #customdropdown .options {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    position: relative;
+    padding: 10px;
+    background: whitesmoke;
+    margin-top: 10px;
+    border-radius: 8px;
+    z-index: 11;
+    transition: .2s all ease-in;
+    transform: translateY(30px);
+}
+
+.form #customdropdown .options.open{
+    transform: translateX(0px);
+
+}
+.form #customdropdown .options.open{
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
+}
+.form #customdropdown .options .option{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border-bottom: 2px solid cornflowerblue;
+    margin-bottom: 10px;
+    border-top: 2px solid transparent;
+    position: relative;
+    transition: .3s all ease-in-out;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.form #customdropdown .options .option:hover{
+    border-top: 2px solid  #396afc;
+    color: whitesmoke;
+}
+
+.form #customdropdown .options .option::before{
+    left: 0;
+    border-radius: 8px;
+    bottom: 0;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: #0586ce;
+    transform: scaleX(0);
+    transition: .3s all ease-in-out;
+}
+.form #customdropdown .options .option:hover::before{
+    transform: scaleX(1);
+}
 .form .submitBtn {
 
     border: 2px solid yellowgreen;

@@ -2,11 +2,12 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import Image from "next/image";
 
 export default function AdvanceSearch() {
     const router = useRouter();
-
-    const [option, setOption] = useState("");
+    const [openMenu, setOpenMenu] = useState(false)
+    const [option, setOption] = useState("Filter Search");
     const [value, setValue] = useState("");
     const [limit, setLimit] = useState(10);
 
@@ -39,6 +40,25 @@ export default function AdvanceSearch() {
             : option === "byFEMALE"
             ? "number"
             : "text"; // Default placeholder if none selected
+
+    const textForDD = option === "byCNIC"
+        ? "Search By CNIC"
+        : option === "byNAME"
+            ? "Search By Name"
+            : option === "byADDRESS"
+                ? "Search By Address"
+                : option === "byMALE"
+                    ? "Search For Males"
+                    : option === "byNUMBER"
+                        ? "Search By Number"
+                        : option === "byFEMALE"
+                            ? "Search For Females"
+                            : "Please Select Filter Option"
+    const changeOption = (value)=>{
+        let newValue = value.trim();
+        setOption(newValue);
+        setOpenMenu(!openMenu)
+    }
 
     const showToast = (type, msg) => {
         toast(msg, {
@@ -106,24 +126,63 @@ export default function AdvanceSearch() {
     return (
         <>
             <div className="form">
-                <select
-                    onChange={(e) => setOption(e.target.value)}
-                    name="searchBy"
-                >
-                    <option value={""}>Filter Search</option>
-                    <option value="byNUMBER">Search By Number (Working)</option>
-                    <option value="byCNIC">Search By CNIC (Working)</option>
-                    <option value="byNAME">Search By Name (Not Working)</option>
-                    <option value="byADDRESS">
-                        Search By Address (Not Working)
-                    </option>
-                    <option value="byMALE">
-                        Search For Males Only (Working)
-                    </option>
-                    <option value="byFEMALE">
-                        Search For FeMales Only (Working)
-                    </option>
-                </select>
+                {/*<select*/}
+                {/*    onChange={(e) => setOption(e.target.value)}*/}
+                {/*    name="searchBy"*/}
+                {/*>*/}
+                {/*    <option value={""}>Filter Search</option>*/}
+                {/*    <option value="byNUMBER">Search By Number (Working)</option>*/}
+                {/*    <option value="byCNIC">Search By CNIC (Working)</option>*/}
+                {/*    <option value="byNAME">Search By Name (Not Working)</option>*/}
+                {/*    <option value="byADDRESS">*/}
+                {/*        Search By Address (Not Working)*/}
+                {/*    </option>*/}
+                {/*    <option value="byMALE">*/}
+                {/*        Search For Males Only (Working)*/}
+                {/*    </option>*/}
+                {/*    <option value="byFEMALE">*/}
+                {/*        Search For FeMales Only (Working)*/}
+                {/*    </option>*/}
+                {/*</select>*/}
+
+                <div id="customdropdown">
+                    <div id="select-btn" onClick={(r)=>setOpenMenu(!openMenu)}>
+                        <span className={"mb-0 text-white"}>{textForDD}</span>
+                        {openMenu ? (
+                            <Image src={"/chevronup.png"} alt={"upbtn"} height={20} width={20} />
+                        ) : (
+                            <Image src={"/chevronDown.png"} alt={"downbtn"} height={20} width={20} />
+                        )}
+                    </div>
+
+                    <ul className={`options ${openMenu ? "open" : ""}`}>
+                        <li className="option" onClick={(e)=>changeOption("byNUMBER")}>
+                            <span>Search By Number</span>
+                            <box-icon name='phone'></box-icon>
+                        </li>
+                        <li className="option" onClick={(e)=>changeOption("byCNIC")}>
+                            <span>Search By CNIC</span>
+                            <box-icon name='id-card'></box-icon>
+                        </li>
+                        <li className="option" onClick={(e)=>changeOption("byNAME")}>
+                            <span>Search By Name (Not Working)</span>
+                            <box-icon name='user'></box-icon>
+                        </li>
+                        <li className="option" onClick={(e)=>changeOption("byADDRESS")}>
+                            <span>Search By Address (Not Working)</span>
+                            <box-icon type='solid' name='contact'></box-icon>
+                        </li>
+                        <li className="option" onClick={(e)=>changeOption("byMALE")}>
+                            <span>Search For Males</span>
+                            <box-icon name='male'></box-icon>
+                        </li>
+                        <li className="option" onClick={(e)=>changeOption("byFEMALE")}>
+                            <span>Search For Females</span>
+                            <box-icon name='female' ></box-icon>
+                        </li>
+                    </ul>
+
+                </div>
 
                 <div
                     className="fields"
