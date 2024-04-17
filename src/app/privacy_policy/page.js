@@ -55,17 +55,17 @@ export default function Page() {
                   Pak Services
                   <bdt className="block-component" />
                 </bdt>{" "}
-                  (<bdt className="block-component" />"<strong>we</strong>," "
-                <strong>us</strong>," or "<strong>our</strong>"
+                  (<bdt className="block-component" />"<strong>we</strong>,&quot; &quot;
+                <strong>us</strong>,&quot; or &quot;<strong>our</strong>"
                 <bdt className="statement-end-if-in-editor" />
               </span>
               <span data-custom-class="body_text">
                 ), describes how and why we might collect, store, use, and/or
                 share (
-                <bdt className="block-component" />"<strong>process</strong>"
+                <bdt className="block-component" />"<strong>process</strong>&quot;
                 <bdt className="statement-end-if-in-editor" />) your information
                 when you use our services (
-                <bdt className="block-component" />"<strong>Services</strong>"
+                <bdt className="block-component" />"<strong>Services</strong>&quot;
                 <bdt className="statement-end-if-in-editor" />
                 ), such as when you:
               </span>
@@ -3116,7 +3116,7 @@ export default function Page() {
                                                                             the
                                                                             section{" "}
                                                                               <bdt className="block-component" />
-                                                                            "
+                                                                              &quot;
                                                                             <bdt className="statement-end-if-in-editor" />
                                                                           </span>
                                                                         </span>
@@ -3168,7 +3168,7 @@ export default function Page() {
                                                                         >
                                                                           <span data-custom-class="body_text">
                                                                             <bdt className="block-component" />
-                                                                            "
+                                                                            &quot;
                                                                             <bdt className="statement-end-if-in-editor" />{" "}
                                                                               below
                                                                             <bdt className="block-component" />
@@ -3478,7 +3478,7 @@ export default function Page() {
                                                                             Do-Not-Track
                                                                             (
                                                                             <bdt className="block-component" />
-                                                                            "DNT"
+                                                                            &quot;DNT&quot;
                                                                             <bdt className="statement-end-if-in-editor" />
                                                                             )
                                                                             feature
@@ -3768,7 +3768,7 @@ export default function Page() {
                                                                           conditions
                                                                           set by{" "}
                                                                             <bdt className="block-component" />
-                                                                          Australia's
+                                                                          Australia&quot;s
                                                                           Privacy
                                                                           Act
                                                                           1988
@@ -3778,7 +3778,7 @@ export default function Page() {
                                                                             <bdt className="statement-end-if-in-editor" />
                                                                           <bdt className="block-component" />
                                                                           New
-                                                                          Zealand's
+                                                                          Zealand&quot;s
                                                                           Privacy
                                                                           Act
                                                                           2020
@@ -4060,7 +4060,7 @@ export default function Page() {
                                                                               the
                                                                               section{" "}
                                                                                 <bdt className="block-component" />
-                                                                              "
+                                                                                &quot;
                                                                               <bdt className="statement-end-if-in-editor" />
                                                                               <a
                                                                                   data-custom-class="link"
@@ -4090,7 +4090,7 @@ export default function Page() {
                                                                                 </span>
                                                                               </a>
                                                                               <bdt className="block-component" />
-                                                                              "
+                                                                              &quot;
                                                                             </span>
                                                                             <bdt className="statement-end-if-in-editor">
                                                                               <span data-custom-class="body_text" />
@@ -4183,7 +4183,7 @@ export default function Page() {
                                                                               breach
                                                                               of
                                                                               New
-                                                                              Zealand's
+                                                                              Zealand&apos;s
                                                                               Privacy
                                                                               Principles
                                                                               to
@@ -4358,7 +4358,7 @@ export default function Page() {
                                                                                                                                                     >
                                                                             <span data-custom-class="body_text">
                                                                               <bdt className="block-component" />
-                                                                              "
+                                                                              &quot;
                                                                             </span>
                                                                             <bdt className="statement-end-if-in-editor">
                                                                               <span data-custom-class="body_text" />
@@ -4757,7 +4757,7 @@ export default function Page() {
                                                                                 an
                                                                                 updated{" "}
                                                                                   <bdt className="block-component" />
-                                                                                "Revised"
+                                                                                  &quot;Revised&quot;
                                                                                 <bdt className="statement-end-if-in-editor" />{" "}
                                                                                   date
                                                                                 and
