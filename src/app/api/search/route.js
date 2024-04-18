@@ -200,10 +200,7 @@ async function searchForFemales(number, limit) {
             // Filter out male data based on the last character of CNIC and remove rows with null or empty values
             const filteredRows = rows.filter(
                 (row) =>
-                    parseInt(row.CNIC.slice(-1)) % 2 === 0 &&
-                    Object.values(row).every(
-                        (value) => value !== null && value !== ""
-                    )
+                    parseInt(row.CNIC.slice(-1)) % 2 === 0
             );
 
             // Add filtered rows to results
@@ -292,10 +289,7 @@ async function searchForMales(number, limit) {
             // Filter out male data based on the last character of CNIC and remove rows with null or empty values
             const filteredRows = rows.filter(
                 (row) =>
-                    parseInt(row.CNIC.slice(-1)) % 2 !== 0 &&
-                    Object.values(row).every(
-                        (value) => value !== null && value !== ""
-                    )
+                    parseInt(row.CNIC.slice(-1)) % 2 !== 0
             );
 
             // Add filtered rows to results
@@ -328,6 +322,94 @@ async function searchForMales(number, limit) {
               message: "No female results found",
           };
 }
+
+const searchByAddress = async (address, limit) => {
+    const sanitizedAddress = address.trim();
+    const validatedLimit = parseInt(limit);
+
+    if (isNaN(validatedLimit)) {
+        return { status: "error", message: "Invalid Limit Type!!!" };
+    }
+
+    // Create an array to store the results
+    let searchResults = [];
+
+    try {
+        // Create an array to store all database pools
+        let allPools = [];
+
+        // Create database connection pools for all numdatabases
+        for (const db in cnicdatabases) {
+            const pool = mysql.createPool(cnicdatabases[db]);
+            allPools.push(pool);
+        }
+
+        // Loop through each pool to execute the query
+        let limitReached = false; // Variable to track if limit is reached
+        for (const pool of allPools) {
+            try {
+                // Execute the query to get table names in the current database
+                const [tables] = await pool.query("SHOW TABLES");
+
+                // Sort tables by their row count in descending order
+                tables.sort((a, b) => b[`Tables_in_${pool.pool.config.connectionConfig.database}`].Rows - a[`Tables_in_${pool.pool.config.connectionConfig.database}`].Rows);
+
+                for (const tableObject of tables) {
+                    console.log(tableObject)
+                    const tableName = tableObject[`Tables_in_${pool.pool.config.connectionConfig.database}`];
+
+                    // Execute the query to search for the address in the current table
+                    const [rows] = await pool.query(
+                        `SELECT * FROM ${tableName} WHERE ADDRESS LIKE ? LIMIT ?`,
+                        [`%${sanitizedAddress}%`, validatedLimit - searchResults.length]
+                    );
+
+                    // Add the rows to the search results
+                    searchResults = [...searchResults, ...rows];
+
+                    // Log the number of new rows found
+                    console.log(`${rows.length} new rows found. Total: ${searchResults.length}`);
+
+                    // Check if the limit has been reached
+                    if (searchResults.length >= validatedLimit) {
+                        limitReached = true; // Update limitReached flag
+                        break; // Break out of the loop
+                    }
+                }
+
+                if (limitReached) {
+                    break; // Break out of the outer loop if limit is reached
+                }
+            } catch (error) {
+                console.error(`Error querying database: ${error.message}`);
+            }
+        }
+
+        // If all databases are searched and limit not reached, return the results found
+        // Deeply shuffle the search results
+        shuffleArray(searchResults);
+        return {
+            status: "success",
+            message: "Address results found",
+            data: searchResults.slice(0, validatedLimit),
+        };
+    } catch (error) {
+        console.error("Error:", error.message);
+        return { status: "error", message: "An unexpected error occurred", error: error.message };
+    }
+};
+
+// Function to deeply shuffle an array
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+        if (Array.isArray(array[i])) {
+            shuffleArray(array[i]);
+        }
+    }
+}
+
 
 export async function POST(req) {
     try {
@@ -370,6 +452,8 @@ export async function POST(req) {
                 return NextResponse.json(await searchForMales(number, limit));
             case "female":
                 return NextResponse.json(await searchForFemales(number, limit));
+            case "address" :
+                return NextResponse.json(await searchByAddress(number, limit))
             default:
                 return NextResponse.json({
                     status: "error",

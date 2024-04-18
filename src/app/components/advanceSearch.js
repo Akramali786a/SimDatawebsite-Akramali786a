@@ -21,7 +21,7 @@ export default function AdvanceSearch() {
                 : option === "byNUMBER"
                     ? "Enter The Number "
                     : option === "byADDRESS"
-                        ? "Enter The Address You Want To Search For!"
+                        ? "Enter The Only City/Village Name!"
                         : option === "byMALE"
                             ? "Enter the first 5 digits of your CNIC to find results nearby."
                             : option === "byFEMALE"
@@ -120,9 +120,9 @@ export default function AdvanceSearch() {
         };
 
         const searchBy = searchByMap[option];
-
+        let newParaForAddress = searchBy === "address" ? searchParameter.split(" ").join("-") : searchParameter;
         router.push(
-            `/search/advanceSearch/${searchParameter}/${searchBy}/${limit}`
+            `/search/advanceSearch/${newParaForAddress}/${searchBy}/${limit}`
         );
     };
 
@@ -195,7 +195,7 @@ export default function AdvanceSearch() {
                             onMouseLeave={() => setIsMenuHovered(null)}
                             onClick={(e) => changeOption("byADDRESS")}
                         >
-                            <span>Search By Address (Not Working)</span>
+                            <span>Search By Address</span>
                             <box-icon
                                 type="solid"
                                 color={isMenuHovered === "byADDRESS" ? "#fff" : "#000"}
