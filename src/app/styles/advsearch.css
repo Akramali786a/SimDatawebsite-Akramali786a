@@ -141,19 +141,18 @@
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 8px 10px;
     border-radius: 10px;
     border-bottom: 2px solid cornflowerblue;
     margin-bottom: 10px;
-    border-top: 2px solid transparent;
     position: relative;
     transition: .3s all ease-in-out;
     overflow: hidden;
     z-index: 1;
+    border-top: 2px solid  #396afc;
 }
 
 .form #customdropdown .options .option:hover{
-    border-top: 2px solid  #396afc;
     color: whitesmoke;
 }
 

@@ -12,11 +12,19 @@
     flex-wrap: wrap;
     margin-top: 30px;
 }
-
+.links .link{
+    width: 160px;
+}
 .links .link a{
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin: 0 auto;
+    text-align: center;
+    display: block;
     color: #6998e1;
     text-decoration: none;
     position: relative;
+    transition: .2s all ease-in;
 }
 .links .link a::before{
     transition: .3s all ease-in;
@@ -29,6 +37,6 @@
     background: #0ca4b8;
     transform: scaleX(0);
 }
-.links .link a:hover::before{
-    transform: scaleX(1);
+.links .link a:hover{
+    color: #20bdff;
  }

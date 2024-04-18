@@ -44,6 +44,14 @@ export default function NavLinks() {
                 </li>
                 <li>
                     <Link
+                        className={path === "/cnic-tracker" ? "active" : ""}
+                        href={"/cnic-tracker"}
+                    >
+                        CNIC Tracker
+                    </Link>
+                </li>
+                <li>
+                    <Link
                         className={path === "/protectme" ? "active" : ""}
                         href={"/protectme"}
                     >

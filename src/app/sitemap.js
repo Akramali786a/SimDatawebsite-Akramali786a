@@ -14,6 +14,12 @@ export default function sitemap() {
             priority: 0.8,
         },
         {
+            url: `https://${domainName}/cnic-tracker`,
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.8,
+        },
+        {
             url: `https://${domainName}/ai`,
             lastModified: new Date(),
             changeFrequency: "weekly",
