@@ -4,6 +4,7 @@ import tablesInCNICDatabases from "./tablesinCnic";
 import tablesInNumDatabases from "./tablesinnumdbs";
 import cnicdatabases from "./cnicDbs";
 import numdatabases from "./numDbs";
+import Locate from "@/app/api/search/Locate";
 
 console.clear();
 
@@ -324,8 +325,27 @@ async function searchForMales(number, limit) {
 }
 
 const searchByAddress = async (address, limit) => {
-    const sanitizedAddress = address.trim();
+    let sanitizedAddress = address.trim().split("-");
+
+    let tablePrefix = sanitizedAddress[0];
+    let table_name = `table_${tablePrefix}`
+
+    sanitizedAddress = sanitizedAddress.slice(1);
+
+    let areaName = sanitizedAddress.join(" ");
+    if(areaName === ""){
+        let findArea = Locate(tablePrefix).split(",").filter((value)=>value.trim() !== "")
+        if(findArea === undefined){
+            return {status:"error",message:"Invalid NearBy Area Please Try Again."}
+        }else{
+            areaName = findArea[findArea.length - 1];
+        }
+    }
+    console.log(`Table Prefix is ${tablePrefix} and Area Name is ${areaName}`)
+
     const validatedLimit = parseInt(limit);
+
+    // return {status:"error",message:"this is success message"}
 
     if (isNaN(validatedLimit)) {
         return { status: "error", message: "Invalid Limit Type!!!" };
@@ -338,56 +358,60 @@ const searchByAddress = async (address, limit) => {
         // Create an array to store all database pools
         let allPools = [];
 
-        // Create database connection pools for all numdatabases
-        for (const db in cnicdatabases) {
-            const pool = mysql.createPool(cnicdatabases[db]);
-            allPools.push(pool);
+        for (const table in tablesInCNICDatabases) {
+            if (tablesInCNICDatabases[table].includes(table_name.trim())){
+                console.log(`Table ${table_name} Found In Database ${table}. Pushing To All Pools Var`);
+                console.log(`---------------------------------------------------------------------------`)
+                const pool = mysql.createPool(cnicdatabases[table]);
+                allPools.push(pool);
+            }
+        }
+
+        if (allPools.length === 0){
+            return {
+                status:"error",
+                message:"No Results Found For This Address!!!"
+            }
         }
 
         // Loop through each pool to execute the query
         let limitReached = false; // Variable to track if limit is reached
         for (const pool of allPools) {
             try {
-                // Execute the query to get table names in the current database
-                const [tables] = await pool.query("SHOW TABLES");
+                // Execute the query to search for the address in the current table
+                const [rows] = await pool.query(
+                    `SELECT * FROM ${table_name} WHERE ADDRESS LIKE ? LIMIT ?`,
+                    [`%${areaName}%`, validatedLimit - searchResults.length]
+                );
 
-                // Sort tables by their row count in descending order
-                tables.sort((a, b) => b[`Tables_in_${pool.pool.config.connectionConfig.database}`].Rows - a[`Tables_in_${pool.pool.config.connectionConfig.database}`].Rows);
+                // Add the rows to the search results
+                searchResults = [...searchResults, ...rows];
 
-                for (const tableObject of tables) {
-                    console.log(tableObject)
-                    const tableName = tableObject[`Tables_in_${pool.pool.config.connectionConfig.database}`];
+                // Log the number of new rows found
+                console.log(`${rows.length} new rows found. Total: ${searchResults.length}`);
 
-                    // Execute the query to search for the address in the current table
-                    const [rows] = await pool.query(
-                        `SELECT * FROM ${tableName} WHERE ADDRESS LIKE ? LIMIT ?`,
-                        [`%${sanitizedAddress}%`, validatedLimit - searchResults.length]
-                    );
-
-                    // Add the rows to the search results
-                    searchResults = [...searchResults, ...rows];
-
-                    // Log the number of new rows found
-                    console.log(`${rows.length} new rows found. Total: ${searchResults.length}`);
-
-                    // Check if the limit has been reached
-                    if (searchResults.length >= validatedLimit) {
-                        limitReached = true; // Update limitReached flag
-                        break; // Break out of the loop
-                    }
-                }
-
-                if (limitReached) {
-                    break; // Break out of the outer loop if limit is reached
+                // Check if the limit has been reached
+                if (searchResults.length >= validatedLimit) {
+                    limitReached = true; // Update limitReached flag
+                    break; // Break out of the loop
                 }
             } catch (error) {
                 console.error(`Error querying database: ${error.message}`);
             }
         }
 
+
         // If all databases are searched and limit not reached, return the results found
         // Deeply shuffle the search results
         shuffleArray(searchResults);
+
+        if (searchResults.length === 0){
+            return {
+                status:"error",
+                message:"No Results Were Found For This Address"
+            }
+        }
+
         return {
             status: "success",
             message: "Address results found",
@@ -398,6 +422,106 @@ const searchByAddress = async (address, limit) => {
         return { status: "error", message: "An unexpected error occurred", error: error.message };
     }
 };
+
+const searchByName = async (address, limit) => {
+    let sanitizedAddress = address.trim().split("-");
+
+    let tablePrefix = sanitizedAddress[0];
+    let table_name = `table_${tablePrefix}`
+
+    sanitizedAddress = sanitizedAddress.slice(1);
+
+    let areaName = sanitizedAddress.join(" ");
+    if(areaName === ""){
+        let findArea = Locate(tablePrefix).split(",").filter((value)=>value.trim() !== "")
+        if(findArea === undefined){
+            return {status:"error",message:"Invalid NearBy Area Please Try Again."}
+        }else{
+            areaName = findArea[findArea.length - 1];
+        }
+    }
+
+
+    const validatedLimit = parseInt(limit);
+
+    // return {status:"error",message:"this is success message"}
+
+    if (isNaN(validatedLimit)) {
+        return { status: "error", message: "Invalid Limit Type!!!" };
+    }
+
+    // Create an array to store the results
+    let searchResults = [];
+
+    try {
+        // Create an array to store all database pools
+        let allPools = [];
+
+        for (const table in tablesInCNICDatabases) {
+            if (tablesInCNICDatabases[table].includes(table_name.trim())){
+                console.log(`Table ${table_name} Found In Database ${table}. Pushing To All Pools Var`);
+                console.log(`---------------------------------------------------------------------------`)
+                const pool = mysql.createPool(cnicdatabases[table]);
+                allPools.push(pool);
+            }
+        }
+
+        if (allPools.length === 0){
+            return {
+                status:"error",
+                message:"No Results Found For This Address!!!"
+            }
+        }
+
+        // Loop through each pool to execute the query
+        let limitReached = false; // Variable to track if limit is reached
+        for (const pool of allPools) {
+            try {
+                // Execute the query to search for the address in the current table
+                const [rows] = await pool.query(
+                    `SELECT * FROM ${table_name} WHERE NAME LIKE ? LIMIT ?`,
+                    [`%${areaName}%`, validatedLimit - searchResults.length]
+                );
+
+                // Add the rows to the search results
+                searchResults = [...searchResults, ...rows];
+
+                // Log the number of new rows found
+                console.log(`${rows.length} new rows found. Total: ${searchResults.length}`);
+
+                // Check if the limit has been reached
+                if (searchResults.length >= validatedLimit) {
+                    limitReached = true; // Update limitReached flag
+                    break; // Break out of the loop
+                }
+            } catch (error) {
+                console.error(`Error querying database: ${error.message}`);
+            }
+        }
+
+
+        // If all databases are searched and limit not reached, return the results found
+        // Deeply shuffle the search results
+        shuffleArray(searchResults);
+
+        if (searchResults.length === 0){
+            return {
+                status:"error",
+                message:"No Results Were Found For This Name"
+            }
+        }
+
+        return {
+            status: "success",
+            message: "Address results found",
+            data: searchResults.slice(0, validatedLimit),
+        };
+    } catch (error) {
+        console.error("Error:", error.message);
+        return { status: "error", message: "An unexpected error occurred", error: error.message };
+    }
+};
+
 
 // Function to deeply shuffle an array
 function shuffleArray(array) {
@@ -454,6 +578,8 @@ export async function POST(req) {
                 return NextResponse.json(await searchForFemales(number, limit));
             case "address" :
                 return NextResponse.json(await searchByAddress(number, limit))
+            case "name" :
+                return NextResponse.json(await searchByName(number, limit))
             default:
                 return NextResponse.json({
                     status: "error",

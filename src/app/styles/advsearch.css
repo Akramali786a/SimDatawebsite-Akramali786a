@@ -84,7 +84,7 @@
 }
 
 
-.form #customdropdown{
+.form .mydropdown{
     margin-top: 20px;
     width: 100%;
     height: 50px;
@@ -92,7 +92,7 @@
     background: #20bdff;
 }
 
-.form #customdropdown #select-btn{
+.form .mydropdown .my-select-btn{
     display: flex;
     align-items: center;
     height: 100%;
@@ -104,16 +104,13 @@
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-.form #customdropdown #menu{
-    /*opacity: 0;*/
-    /*visibility: hidden;*/
-    /*pointer-events: none;*/
+.form .mydropdown #menu{
     height: 150px;
     width: 100%;
     background: red;
 }
 
-.form #customdropdown .options {
+.form .mydropdown .options {
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
@@ -127,16 +124,16 @@
     transform: translateY(30px);
 }
 
-.form #customdropdown .options.open{
+.form .mydropdown .options.open{
     transform: translateX(0px);
 
 }
-.form #customdropdown .options.open{
+.form .mydropdown .options.open{
     visibility: visible;
     opacity: 1;
     pointer-events: all;
 }
-.form #customdropdown .options .option{
+.form .mydropdown .options .option{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -152,11 +149,11 @@
     border-top: 2px solid  #396afc;
 }
 
-.form #customdropdown .options .option:hover{
+.form .mydropdown .options .option:hover{
     color: whitesmoke;
 }
 
-.form #customdropdown .options .option::before{
+.form .mydropdown .options .option::before{
     left: 0;
     border-radius: 8px;
     bottom: 0;
@@ -169,7 +166,7 @@
     transform: scaleX(0);
     transition: .3s all ease-in-out;
 }
-.form #customdropdown .options .option:hover::before{
+.form .mydropdown .options .option:hover::before{
     transform: scaleX(1);
 }
 .form .submitBtn {

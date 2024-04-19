@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Image from "next/image";
 import Link from "next/link";
+import CNICCodes from "../search/Functions/CNICCodes";
 
 export default function AdvanceSearch() {
     const router = useRouter();
@@ -12,6 +13,13 @@ export default function AdvanceSearch() {
     const [option, setOption] = useState("Filter Search");
     const [value, setValue] = useState("");
     const [limit, setLimit] = useState(10);
+
+    const [AdressDD, setAdressDD] = useState(false);
+    const [addressText, setaddressText] = useState("");
+
+    const [filterText, setfilterText] = useState("");
+    const [undefinedArea, setUndefinedArea] = useState("")
+
 
     const placeholder =
         option === "byCNIC"
@@ -84,26 +92,26 @@ export default function AdvanceSearch() {
             return;
         }
 
-        const searchParameter = value.trim();
+        const searchParameter = value;
+        console.log(searchParameter)
 
         // Check if search parameter is empty
         if (searchParameter === "") {
             showToast(
                 "error",
-                `Please Enter A Valid ${
-                    option === "byCNIC"
-                        ? "CNIC Number"
-                        : option === "byNUMBER"
-                            ? "Mobile Number"
-                            : option === "byNAME"
-                                ? "Name"
-                                : option === "byADDRESS"
-                                    ? "Address"
-                                    : option === "byMALE"
+                `Please Enter A Valid ${option === "byCNIC"
+                    ? "CNIC Number"
+                    : option === "byNUMBER"
+                        ? "Mobile Number"
+                        : option === "byNAME"
+                            ? "Name"
+                            : option === "byADDRESS"
+                                ? "Address"
+                                : option === "byMALE"
+                                    ? "CNIC Digits"
+                                    : option === "byFEMALE"
                                         ? "CNIC Digits"
-                                        : option === "byFEMALE"
-                                            ? "CNIC Digits"
-                                            : "value"
+                                        : "value"
                 }`
             );
             return;
@@ -120,17 +128,61 @@ export default function AdvanceSearch() {
         };
 
         const searchBy = searchByMap[option];
-        let newParaForAddress = searchBy === "address" ? searchParameter.split(" ").join("-") : searchParameter;
+
+        if(searchBy === undefined){
+            showToast("error","Invalid Search Method. Please Try Again!")
+        }
+
+        let newParamforAddress ;
+
+        if(searchBy === "address" || searchBy === "name"){
+            if(value === ""){
+                showToast("info","Please Select Nearby Area First");
+            }
+        }
+
+
+
+        let notDefinedArea = "";
+        if(undefinedArea !== ""){
+            notDefinedArea = undefinedArea.split(" ").join("-");
+        }
+
+        newParamforAddress = `${searchParameter}-${notDefinedArea}`
+
         router.push(
-            `/search/advanceSearch/${newParaForAddress}/${searchBy}/${limit}`
+            `/search/advanceSearch/${searchBy === "address" || searchBy ==="name" ? newParamforAddress : searchParameter}/${searchBy}/${limit}`
         );
     };
+    const handleAddressChange = (code, city) => {
+        setValue(code);
+        setaddressText(city);
+        setAdressDD(!AdressDD)
+        setfilterText("")
+    }
+
+    const handleFilterAreas = (val) =>{
+        if(val.trim() === ""){
+            setfilterText("")
+            return
+        }
+        setfilterText(val)
+    }
+
+    const handleOpenFirstMenu = ()=>{
+        if(AdressDD){
+            setAdressDD(!AdressDD)
+            setOpenMenu(!openMenu)
+        }else{
+            setOpenMenu(!openMenu)
+        }
+    }
 
     return (
         <>
             <div className="form">
-                <div id="customdropdown">
-                    <div id="select-btn" onClick={(r) => setOpenMenu(!openMenu)}>
+                <div id="customdropdown" className="mydropdown">
+                    <div className="my-select-btn" onClick={handleOpenFirstMenu}>
                         <span className={"mb-0 text-white"}>{textForDD}</span>
                         {openMenu ? (
                             <Image
@@ -138,11 +190,13 @@ export default function AdvanceSearch() {
                                 alt={"upbtn"}
                                 height={20}
                                 width={20}
+                                priority={true}
                             />
                         ) : (
                             <Image
                                 src={"/chevronDown.png"}
                                 alt={"downbtn"}
+                                priority={true}
                                 height={20}
                                 width={20}
                             />
@@ -182,7 +236,7 @@ export default function AdvanceSearch() {
                             onMouseLeave={() => setIsMenuHovered(null)}
                             onClick={(e) => changeOption("byNAME")}
                         >
-                            <span>Search By Name (Not Working)</span>
+                            <span>Search By Name</span>
                             <box-icon
                                 type="solid"
                                 color={isMenuHovered === "byNAME" ? "#fff" : "#000"}
@@ -229,21 +283,83 @@ export default function AdvanceSearch() {
                     </ul>
                 </div>
 
-                <div
-                    className="fields"
-                    style={{
-                        marginBottom:
-                            option === "byMALE" ? "0" : option === "byFEMALE" ? "0" : option=== "byCNIC" ? "0" : "20px",
-                    }}
-                >
-                    <input
-                        className="searchnuminput"
-                        type={type}
-                        value={value}
-                        onChange={(e) => setValue(e.target.value)}
-                        placeholder={placeholder}
-                    />
-                </div>
+                {option === "byADDRESS" || option === "byNAME" ? (
+                    <>
+
+                    <div className="mydropdown mb-4">
+                        <div className="my-select-btn" onClick={() => setAdressDD(!AdressDD)} >
+                            <span className={"mb-0 text-white"}>{addressText === "" ? "Please Select The Area" : addressText}</span>
+                            {AdressDD ? (
+                                <Image
+                                    src={"/chevronup.png"}
+                                    alt={"upbtn"}
+                                    height={20}
+                                    width={20}
+                                />
+                            ) : (
+                                <Image
+                                    src={"/chevronDown.png"}
+                                    alt={"downbtn"}
+                                    height={20}
+                                    width={20}
+                                />
+                            )}
+                        </div>
+                        <ul style={{ maxHeight: "300px", overflowX: "auto" }} className={`options ${AdressDD ? "open" : ""}`}>
+                            <li className="mb-3">
+                                <input type="search" style={{outline:"none",border:"2px solid cornflowerblue" ,width:"100%",height:"100%",borderRadius:"10px",padding:"10px 10px",background:"transparent"}} placeholder={"Search For City/Area"} name="search" value={filterText} onChange={(e)=>handleFilterAreas(e.target.value)} />
+                            </li>
+                            {Object.keys(CNICCodes)
+                                .filter(city => city.toLowerCase().includes(filterText.toLowerCase())) // Filter cities based on filterText
+                                .map((city, index) => {
+                                    const cityDetails = CNICCodes[city];
+                                    const { code } = cityDetails;
+                                    return (
+                                        <li key={index} onClick={() => handleAddressChange(code, city)} className="option">
+                                            <span>{city}</span>
+                                        </li>
+                                    );
+                                })}
+                        </ul>
+                    </div>
+
+                        <div
+                            className="fields"
+                            style={{
+                                marginBottom:
+                                    option === "byADDRESS" || option === "byNAME" ? "0" : "20px",
+                            }}
+                        >
+                            <input
+                                className="searchnuminput"
+                                type={type}
+                                value={undefinedArea}
+                                onChange={(e)=>setUndefinedArea(e.target.value)}
+                                placeholder={option === "byADDRESS" ?"Enter Your Area If Not Listed Above" : "Person Name To Search For!"}
+                            />
+                        </div>
+                        <p className={"text-info mb-3 fw-medium text-start"} style={{
+                            marginBottom:
+                                option === "byADDRESS" ? "20px" : "0px",padding:"0 5px"
+                        }}>{option === "byADDRESS" ? "Can\'t find your city or village in the dropdown menu above? Select your nearby area from the options provided and then input your city or village name here." : `You Will The Results For ${undefinedArea ? undefinedArea : "\'Type Name\'"} Within ${addressText ? addressText : "\'Select Area First\'"} Area!`}</p>
+                    </>
+                ) : (
+                    <div
+                        className="fields"
+                        style={{
+                            marginBottom:
+                                option === "byMALE" ? "0" : option === "byFEMALE" ? "0" : option === "byCNIC" ? "0" : "20px",
+                        }}
+                    >
+                        <input
+                            className="searchnuminput"
+                            type={type}
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                            placeholder={placeholder}
+                        />
+                    </div>
+                )}
                 {option === "byMALE" || option === "byFEMALE" ? (
                     <i
                         style={{ fontSize: "13px" }}
@@ -266,7 +382,7 @@ export default function AdvanceSearch() {
                                 ? "20px"
                                 : option === "byFEMALE"
                                     ? "20px"
-                                    : option === "byCNIC" ? "10px" :     "0px",
+                                    : option === "byCNIC" ? "10px" : "0px",
                     }}
                     onChange={(e) => setLimit(e.target.value)}
                 >
