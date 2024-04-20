@@ -4,7 +4,7 @@ import Locate from "./Locate";
 
 import "react-loading-skeleton/dist/skeleton.css";
 import { ToastContainer, toast } from "react-toastify";
-import DetailsArea from "@/app/cnic-tracker/components/DetailsArea";
+import DetailsArea from "./DetailsArea";
 
 function InputArea(props) {
 	const [cnic, setCnic] = useState("");

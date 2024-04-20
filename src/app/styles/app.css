@@ -11,6 +11,7 @@
     flex-direction: column;
     height: calc(100svh - 60px);
     padding: 10px !important;
+    overflow-y: auto;
 
 }
 
@@ -185,6 +186,12 @@ form .submitBtn:hover::before {
 .advBtn:hover::before {
     transform: scaleX(1);
 }
+
+/*.adsforterra{*/
+/*    width: 300px;*/
+/*    height: 250px;*/
+/*    background: wheat;*/
+/*}*/
 
 @media (max-width:500px) {
 

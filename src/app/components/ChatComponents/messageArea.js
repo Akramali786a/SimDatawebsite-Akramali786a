@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import AiResponse from "@/app/components/AIcomponents/aiResponse";
+import AiResponse from "../AIcomponents/aiResponse";
 import { useRouter } from "next/navigation";
 
 function MessageArea(props) {
@@ -8,7 +8,6 @@ function MessageArea(props) {
     const [aiResponses, setAiResponses] = useState([]); // State to hold AI responses
     const topScroller = useRef(null);
     const pref = useRef(null);
-    const router = useRouter();
 
     const handleMessageSend = async () => {
         const prompt = message.trim();

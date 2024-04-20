@@ -4,8 +4,11 @@ import("bootstrap/dist/css/bootstrap.css");
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar";
 import Script from "next/script";
-import("./favicon.ico");
+
 import Adsense from "./components/Adsense";
+import Adstera_socialBar from "./components/ads/adstera_socialBar";
+import("../../public/favicon.ico");
+
 export const metadata = {
     title: "PAK DATA  Instant SIM Details Retrieval",
     description: "GET SIM DETAILS INSTANTLY",
@@ -41,6 +44,7 @@ export default function RootLayout({ children }) {
                 {process.env.NODE_ENV === "production" ? (
                     <Adsense pid="ca-pub-7447453608219572" />
                 ) : null}
+
             </head>
             <body>
                 <Navbar />
@@ -52,6 +56,7 @@ export default function RootLayout({ children }) {
                     src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"
                     defer={true}
                 />
+            <Adstera_socialBar url={"//drugstoredemuretake.com/f4/03/e4/f403e4dfe1d039354ef7280c6b059279.js"} />
             </body>
         </html>
     );

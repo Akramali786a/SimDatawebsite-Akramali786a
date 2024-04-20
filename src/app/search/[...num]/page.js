@@ -1,6 +1,6 @@
-import BackBTN from "@/app/components/backBTN";
+import BackBTN from "../../components/backBTN";
 import React from "react";
-import ActionBtns from "@/app/components/actionBtns";
+import ActionBtns from "../../components/actionBtns";
 import("../../styles/search.css");
 import { ToastContainer, toast } from "react-toastify";
 

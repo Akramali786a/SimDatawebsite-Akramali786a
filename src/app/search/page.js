@@ -1,7 +1,7 @@
 import AdvanceSearch from "../components/advanceSearch";
 import { ToastContainer } from "react-toastify";
 
-import("@/app/styles/advsearch.css");
+import("../styles/advsearch.css");
 
 export const metadata = {
     title: "Pak Data Authorized NADRA Data Retrieval (Pakistan Government)",

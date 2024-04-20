@@ -1,6 +1,6 @@
 import React from 'react';
 import("./styles.css");
-import InputArea from "@/app/cnic-tracker/components/inputArea";
+import InputArea from "./components/inputArea";
 
 
 function Page(props) {

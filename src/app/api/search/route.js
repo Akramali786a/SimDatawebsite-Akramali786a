@@ -4,7 +4,7 @@ import tablesInCNICDatabases from "./tablesinCnic";
 import tablesInNumDatabases from "./tablesinnumdbs";
 import cnicdatabases from "./cnicDbs";
 import numdatabases from "./numDbs";
-import Locate from "@/app/api/search/Locate";
+import Locate from "./Locate";
 
 console.clear();
 
