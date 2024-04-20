@@ -1,7 +1,6 @@
 import React from 'react';
-import MessageArea from "@/app/components/ChatComponents/messageArea";
-import Footer from "@/app/components/ChatComponents/Footer";
-import Message from "@/app/components/ChatComponents/Message";
+import MessageArea from "../components/ChatComponents/messageArea";
+
 
 import ("../styles/chat.css");
 function Page(props) {

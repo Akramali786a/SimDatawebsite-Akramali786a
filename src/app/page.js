@@ -43,7 +43,7 @@ const App = () => {
                     </div>
 
                     {/* <Banner300x250 url={"//drugstoredemuretake.com/078be6385401567a2171cc0096eedc4e/invoke.js"} /> */}
-                    <Banner300x160 url={"drugstoredemuretake.com/4822d137643eef9722d12cf1c43c455e/invoke.js"} />
+                    {process.env.NODE_ENV === "production"? (<Banner300x160 url={"drugstoredemuretake.com/4822d137643eef9722d12cf1c43c455e/invoke.js"} />) : null}
                 </div>
 
 

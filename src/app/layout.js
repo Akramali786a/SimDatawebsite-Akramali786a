@@ -56,7 +56,7 @@ export default function RootLayout({ children }) {
                     src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"
                     defer={true}
                 />
-            <Adstera_socialBar url={"//drugstoredemuretake.com/f4/03/e4/f403e4dfe1d039354ef7280c6b059279.js"} />
+                {process.env.NODE_ENV==="production" ? (<Adstera_socialBar url={"//drugstoredemuretake.com/f4/03/e4/f403e4dfe1d039354ef7280c6b059279.js"} />) : null}
             </body>
         </html>
     );
