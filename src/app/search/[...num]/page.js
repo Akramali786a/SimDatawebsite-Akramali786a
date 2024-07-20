@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 const searchData = async (num, filter, limit) => {
     const baseUrl =
         process.env.NODE_ENV === "production"
-            ? "https://pakdata.vercel.app"
+            ? "https://pakdata.vercel.app713"
             : "http://localhost:3000";
     const apiUrl = `${baseUrl}/api/search`;
 
